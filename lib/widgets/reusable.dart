@@ -227,7 +227,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar({
     SnackBar(
       // behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.red,
-      content: Text(message!),
+      content: Text(message ?? "error"),
       duration: const Duration(seconds: 2),
     ),
   );

@@ -49,13 +49,14 @@ class UserRequests {
           );
 
           var responseJson = json.decode(response.body);
-          if (responseJson['status'] == 'success') {
+          print(responseJson);
+          if (responseJson['message'] == 'User logged in successfully') {
             return ApiResponse.success(
               UserModel.fromJson(
                 {
-                  ...responseJson["data"],
-                  "authToken": responseJson["authToken"],
-                  "userId": responseJson?["data"]["_id"],
+                  ...responseJson["user"],
+                  "authToken": responseJson["token"],
+                  "userId": responseJson?["user"]["_id"],
                 },
               ),
             );
