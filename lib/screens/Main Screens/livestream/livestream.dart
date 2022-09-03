@@ -81,33 +81,38 @@ class _LiveStreamState extends State<LiveStream> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                showChat = !showChat;
+              });
+            },
+            icon: const Icon(Icons.chat),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _switch = !_switch;
+              });
+            },
+            icon: const Icon(Icons.switch_camera),
+          ),
+        ],
       ),
       body: Container(
         child: Column(
           children: [
             Container(
-              
               color: primaryColor,
               // child: _renderRemoteVideo(),
             ),
-            showChat? Expanded(
-              child: showChatSection(),
-            ):Container(),
+            showChat
+                ? Expanded(
+                    child: showChatSection(),
+                  )
+                : Container(),
           ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        
-        
-        onPressed: () {
-          setState(() {
-            showChat = !showChat;
-          });
-        },
-        backgroundColor: Colors.green,
-        child: Icon(
-          Icons.message,
         ),
       ),
     );
@@ -122,7 +127,7 @@ class _LiveStreamState extends State<LiveStream> {
             child: Messages(),
           ),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.only(bottom:20, left: 10, right: 10),
             child: Row(
               children: [
                 Expanded(

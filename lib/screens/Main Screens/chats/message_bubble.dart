@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pp_stream_mobile_app/constant/colors.dart';
 
 class MessageBubble extends StatelessWidget {
   final String? message;
@@ -26,7 +27,7 @@ class MessageBubble extends StatelessWidget {
             horizontal: 8,
           ),
           decoration: BoxDecoration(
-            color: isMe! ? Colors.grey[300] : Theme.of(context).accentColor,
+              color:  yellowColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -37,9 +38,7 @@ class MessageBubble extends StatelessWidget {
           child: Text(
             message!,
             style: TextStyle(
-              color: isMe!
-                  ? Colors.black
-                  : Theme.of(context).accentTextTheme.headline1!.color,
+            color: pureWhiteBackgroundColor,
             ),
           ),
         ),
