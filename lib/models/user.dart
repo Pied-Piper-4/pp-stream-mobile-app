@@ -39,7 +39,7 @@ class UserModel {
         "name": name,
         "email": email,
         "phone": phone,
-        "authToken": token,
+        "token": token,
         "pic": pic,
         "blocked": blocked,
         "isGoogleAuth": isGoogleAuth,
