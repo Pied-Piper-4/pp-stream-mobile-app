@@ -10,7 +10,7 @@ List<ChatModel> getAllChatMessages() {
     ),
     ChatModel(
       sender: 'Phubie',
-      message: 'I am here to help you',
+      message: 'I am here to hs,dbfkqbfkjzbekjfbzkjdslkgndsklgnlksdnglkdsnglkdsngflkdsnlkdkngkdlfnglkdngebfelp you',
       time: DateTime.now(),
       avatarUrl: 'https://i.imgur.com/7z5wQYt.png',
     ),

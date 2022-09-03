@@ -17,7 +17,8 @@ class MessageBubble extends StatelessWidget {
           isMe! ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-          width: 140,
+          width: MediaQuery.of(context).size.width * 0.8,
+          
           padding: EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 16,
@@ -27,7 +28,8 @@ class MessageBubble extends StatelessWidget {
             horizontal: 8,
           ),
           decoration: BoxDecoration(
-              color:  yellowColor,
+          
+              color:  Colors.transparent,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -35,11 +37,22 @@ class MessageBubble extends StatelessWidget {
               bottomRight: isMe! ? Radius.circular(0) : Radius.circular(20),
             ),
           ),
-          child: Text(
-            message!,
-            style: TextStyle(
-            color: pureWhiteBackgroundColor,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                message!,
+                style: TextStyle(
+                color: pureWhiteBackgroundColor.withOpacity(.7),
+                ),
+              ),
+              Text(
+                "12:00",
+                style: TextStyle(
+                   color: pureWhiteBackgroundColor.withOpacity(.7),
+                ),
+              ),
+            ],
           ),
         ),
       ],

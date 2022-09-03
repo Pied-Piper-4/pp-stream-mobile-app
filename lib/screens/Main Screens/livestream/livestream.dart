@@ -9,6 +9,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pp_stream_mobile_app/constant/agora.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/chats/messages.dart';
 
 class LiveStream extends StatefulWidget {
@@ -72,43 +73,92 @@ class _LiveStreamState extends State<LiveStream> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Live Streaming...",
-          style: TextStyle(fontFamily: "Poppins"),
-        ),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                showChat = !showChat;
-              });
-            },
-            icon: const Icon(Icons.chat),
+        backgroundColor: primaryColor,
+        appBar: AppBar(
+          title: const Text(
+            "Live Streaming...",
+            style: TextStyle(fontFamily: "Poppins"),
           ),
-         
-        ],
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              color: primaryColor,
-              // child: _renderRemoteVideo(),
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                _showStopStreamingWarning(context);
+              },
+              icon: const Icon(Icons.exit_to_app),
             ),
-            showChat
-                ? Expanded(
-                    child: showChatSection(),
-                  )
-                : Container(),
           ],
         ),
-      ),
-    );
+        body: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: primaryColor,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Messages(),
+                          ),
+                          Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.black.withOpacity(.5),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _controller,
+                                    onChanged: (value) {
+                                      _enteredMessage = value;
+                                    },
+                                    decoration: const InputDecoration(
+                                      hintText: "Enter a message...",
+                                      hintStyle: TextStyle(
+                                        color: pureWhiteBackgroundColor,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    _controller.clear();
+                                  },
+                                  icon: const Icon(
+                                    Icons.send,
+                                    color: pureWhiteBackgroundColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Widget showLiveStreamSection() {
+    return _renderRemoteVideo();
   }
 
   Widget showChatSection() {
@@ -120,13 +170,22 @@ class _LiveStreamState extends State<LiveStream> {
             child: Messages(),
           ),
           Container(
-            padding: EdgeInsets.only(bottom:20, left: 10, right: 10),
+            padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      hintStyle: TextStyle(
+                        color: pureWhiteBackgroundColor.withOpacity(.7),
+                      ),
+                      labelStyle: TextStyle(
+                        color: pureWhiteBackgroundColor.withOpacity(.7),
+                      ),
                       hintText: "Send a message...",
                       labelText: "Send a message...",
                     ),
@@ -192,6 +251,45 @@ class _LiveStreamState extends State<LiveStream> {
         textAlign: TextAlign.center,
       );
     }
+  }
+
+  void _showStopStreamingWarning(context) async {
+    return showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: const Text('Stop Streaming'),
+            content: const Text('Are you sure you want to stop streaming?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, mainScreenRoute);
+                },
+                child: const Text(
+                  'Stop Streaming now',
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontFamily: "Poppins",
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   @override
