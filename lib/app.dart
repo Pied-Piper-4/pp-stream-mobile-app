@@ -39,7 +39,7 @@ class App extends StatelessWidget {
           ),
         ),
         //changed to login screen
-        home: !isLogged ? MainScreen() : const MainScreen(),
+        home: !isLogged ? const SplashScreen() : const MainScreen(),
       ),
     );
   }

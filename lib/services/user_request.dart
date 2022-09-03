@@ -20,20 +20,17 @@ class UserRequests {
   static Future<ApiResponse?> googleAuth() async {
     var url = Uri.parse(UserServiceUrls.googleSignInEndpoint);
     try {
-      GoogleSignInAccount? googleResponse =
-          await UserRequests._googleAuth.signIn();
+      GoogleSignInAccount? googleResponse = await UserRequests._googleAuth.signIn();
 
       if (googleResponse != null) {
-        GoogleSignInAuthentication? googleAuth =
-            await googleResponse.authentication;
+        GoogleSignInAuthentication? googleAuth = await googleResponse.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
 
-        final UserCredential userCred =
-            await UserRequests.auth.signInWithCredential(credential);
+        final UserCredential userCred = await UserRequests.auth.signInWithCredential(credential);
 
         if (userCred.user != null) {
           final response = await http.post(
@@ -82,6 +79,47 @@ class UserRequests {
 
       }
     } catch (e) {
+      return ApiResponse.withError(e);
+    }
+  }
+
+  static Future<ApiResponse?> emailLogin({
+    required String? email,
+    required String? password,
+  }) async {
+    var loginUrl = Uri.parse(UserServiceUrls.normalLoginEndpoint);
+    try {
+      http.Response response = await http.post(
+        loginUrl,
+        body: json.encode(
+          {
+            "email": email,
+            "password": password,
+          },
+        ),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson['status']);
+
+      if (responseJson['status'] == 'success') {
+        return ApiResponse.success(
+          UserModel.fromJson(
+            {
+              "token": responseJson["token"],
+              "id": responseJson?["data"]?["_id"],
+              ...responseJson["data"],
+            },
+          ),
+        );
+      }
+
+      return ApiResponse(hasError: true, data: responseJson?['message']);
+    } catch (e) {
+      print("wow");
       return ApiResponse.withError(e);
     }
   }

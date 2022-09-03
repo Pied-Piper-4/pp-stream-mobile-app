@@ -25,7 +25,7 @@ class _LiveStreamState extends State<LiveStream> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initPlatformState();
+    // initPlatformState();
   }
 
   Future<void> initPlatformState() async {

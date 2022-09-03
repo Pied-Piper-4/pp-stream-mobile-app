@@ -20,17 +20,17 @@ class PPStreamSharedPreference {
   }
 
   static Future<bool> checkUserLoggedIn(SharedPreferences? pref) async {
-    return pref?.getBool('isLogged') ?? false;
+    return pref?.getBool('logged') ?? false;
   }
 
-  static Future<bool> checkIfFirstTimeLoggedIn(SharedPreferences? pref) async {
-    return pref?.getBool('firstLogged') ?? true;
-  }
+  // static Future<bool> checkIfFirstTimeLoggedIn(SharedPreferences? pref) async {
+  //   return pref?.getBool('firstLogged') ?? true;
+  // }
 
-  static Future<void> setFirstLoggedFalseAfterLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('firstLogged', false);
-  }
+  // static Future<void> setFirstLoggedFalseAfterLogin() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('firstLogged', false);
+  // }
 
   static Future<UserModel> getUser(SharedPreferences? pref) async {
     String? userJson = pref?.getString('user') ?? "{}";
@@ -39,18 +39,14 @@ class PPStreamSharedPreference {
 
   static Future<void> persistUserLoginData(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isLogged', true);
+    prefs.setBool('logged', true);
     prefs.setString('user', json.encode(user.toJson()));
   }
-
-
 
   static Future<bool> checkIfUserHasProvidedCameraAndGalleryPermission(
       SharedPreferences? pref) async {
     return pref?.getBool('cameraGalleryPermissionObtained') ?? false;
   }
-
-  
 
   static clearSharedPreference() async {
     SharedPreferences? pref = await SharedPreferences.getInstance();
