@@ -36,18 +36,25 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            topImageContent(context),
-            userDetailsContent(context),
-          ],
-        ),
-      ),
-    );
+    final userProv = Provider.of<UserProvider>(context);
+    return userProv.user == null
+        ? const Center(
+            child: CircularProgressIndicator(
+              color: primaryColor,
+            ),
+          )
+        : Scaffold(
+            body: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  topImageContent(context),
+                  userDetailsContent(context),
+                ],
+              ),
+            ),
+          );
   }
 
   Widget topImageContent(context) {

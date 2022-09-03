@@ -14,13 +14,25 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: dimmedWhiteBackgroundColor,
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: const Center(
-        child: Text('Settings'),
-      ),
-    );
+        backgroundColor: primaryColor,
+        body: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 38.0),
+                child: Center(
+                  child: Text(
+                    'Settings',
+                    style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              
+            ],
+          ),
+        ));
   }
 }

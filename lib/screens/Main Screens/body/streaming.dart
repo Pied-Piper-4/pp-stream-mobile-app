@@ -8,7 +8,7 @@ import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming_card_tile.dart';
 import 'package:provider/provider.dart';
-
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 class StreamingPage extends StatefulWidget {
   const StreamingPage({Key? key}) : super(key: key);
 
@@ -52,7 +52,8 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
+                      Navigator.of(context)
+                          .popAndPushNamed(liveStreamPageRoute);
                     },
                     child: RichText(
                       text: const TextSpan(
@@ -60,16 +61,20 @@ class _StreamingPageState extends State<StreamingPage> {
                           WidgetSpan(
                             child: Icon(
                               Icons.add,
-                              color: pureWhiteBackgroundColor,
+                              color: redShade,
+                              size: 20,
                             ),
                           ),
                           WidgetSpan(
-                              child: Text(
-                            "New",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "PoppinsMedium",
-                              color: pureWhiteBackgroundColor,
+                              child: Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              "Go Live",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: "PoppinsMedium",
+                                color: redShade,
+                              ),
                             ),
                           )),
                         ],
@@ -92,7 +97,8 @@ class _StreamingPageState extends State<StreamingPage> {
                       child: const DecoratedBox(
                         decoration: BoxDecoration(
                             color: Color.fromRGBO(36, 52, 71, 0.5),
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                       ),
                     ),
                     Padding(
@@ -102,7 +108,8 @@ class _StreamingPageState extends State<StreamingPage> {
                         children: [
                           CircleAvatar(
                             radius: 26, // Image radius
-                            backgroundImage: NetworkImage(userDataProv.user?.pic ??
+                            backgroundImage: NetworkImage(userDataProv
+                                    .user?.pic ??
                                 "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg"),
                           ),
                           const SizedBox(
@@ -187,7 +194,8 @@ class _StreamingPageState extends State<StreamingPage> {
                         children: [
                           Positioned.fill(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 14.0, bottom: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, bottom: 10.0),
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Row(
@@ -223,7 +231,8 @@ class _StreamingPageState extends State<StreamingPage> {
                             child: new DecoratedBox(
                               decoration: new BoxDecoration(
                                   color: Color.fromRGBO(36, 52, 71, 0.5),
-                                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
                         ],
