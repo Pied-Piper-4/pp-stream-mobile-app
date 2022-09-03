@@ -57,7 +57,7 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).poppk, AndPushNamed(liveStreamPageRoute);
+                      Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
                     },
                     child: RichText(
                       text: const TextSpan(

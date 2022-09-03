@@ -90,14 +90,7 @@ class _LiveStreamState extends State<LiveStream> {
             },
             icon: const Icon(Icons.chat),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _switch = !_switch;
-              });
-            },
-            icon: const Icon(Icons.switch_camera),
-          ),
+         
         ],
       ),
       body: Container(
