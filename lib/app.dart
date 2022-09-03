@@ -17,24 +17,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isLogged = userLoggedAndData!.isLogged!;
     // print(isLogged);
-    return MultiProvider(
-      providers: [],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        // initialRoute: widget.logged != null && widget.logged==true ? mainScreenRoute:splashScreenRoute,
-        theme: ThemeData(
-          backgroundColor: dimmedWhiteBackgroundColor,
-          primaryColor: primaryColor,
-          textTheme: GoogleFonts.poppinsTextTheme(),
-          appBarTheme: const AppBarTheme(
-            color: primaryColor,
-          ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: RouteGenerator.generateRoute,
+      // initialRoute: widget.logged != null && widget.logged==true ? mainScreenRoute:splashScreenRoute,
+      theme: ThemeData(
+        backgroundColor: dimmedWhiteBackgroundColor,
+        primaryColor: primaryColor,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        appBarTheme: const AppBarTheme(
+          color: primaryColor,
         ),
-        //changed to login screen
-        // home: !isLogged ? const SplashScreen() : const MainScreen(),
-        home: SplashScreen(),
       ),
+      //changed to login screen
+      // home: !isLogged ? const SplashScreen() : const MainScreen(),
+      home: SplashScreen(),
     );
   }
 }
