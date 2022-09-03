@@ -24,9 +24,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => isLogged
-              ? UserProvider(user: userLoggedAndData?.user)
-              : UserProvider(),
+          create: (_) => isLogged ? UserProvider(user: userLoggedAndData?.user) : UserProvider(),
         ),
       ],
       child: MaterialApp(
@@ -41,8 +39,7 @@ class App extends StatelessWidget {
           ),
         ),
         //changed to login screen
-        home: !isLogged ? const SplashScreen() : const MainScreen(),
-      
+        home: !isLogged ? MainScreen() : const MainScreen(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/screens/Main%20Screens/livestream/livestream.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/main_screen.dart';
 import 'package:pp_stream_mobile_app/screens/authentication/confirm_login.dart';
 import 'package:pp_stream_mobile_app/screens/authentication/login.dart';
@@ -26,6 +27,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ConfirmLoginScreen());
       case onBoardingScreenRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
+      case liveStreamPageRoute:
+        return MaterialPageRoute(builder: (_) => const LiveStream());
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
