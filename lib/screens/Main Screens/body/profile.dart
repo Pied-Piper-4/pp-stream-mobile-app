@@ -270,9 +270,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height / 4.5,
-      child: Image.asset(
-        banner,
-        fit: BoxFit.cover,
+      decoration: const BoxDecoration(
+        color: primaryColor,
       ),
     );
   }

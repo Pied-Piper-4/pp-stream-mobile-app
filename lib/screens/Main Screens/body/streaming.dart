@@ -51,9 +51,13 @@ class _StreamingPageState extends State<StreamingPage> {
                     ],
                   ),
                   GestureDetector(
+<<<<<<< HEAD
                     onTap: () {
                       Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
                     },
+=======
+                    onTap: () {},
+>>>>>>> b55b99f7ec8a16912d4aee19bc12d09b91b4f689
                     child: RichText(
                       text: const TextSpan(
                         children: [
@@ -171,11 +175,19 @@ class _StreamingPageState extends State<StreamingPage> {
                           Text(
                             'Popular Streams',
                             style: TextStyle(
+<<<<<<< HEAD
                                 color: Colors.white70, fontSize: 26, fontWeight: FontWeight.w500),
+=======
+                              color: Colors.white70,
+                              fontSize: 22,
+                             fontFamily: "PoppinsMedium",
+                            ),
+>>>>>>> b55b99f7ec8a16912d4aee19bc12d09b91b4f689
                           )
                         ],
                       ),
                     ),
+<<<<<<< HEAD
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Padding(
@@ -224,9 +236,59 @@ class _StreamingPageState extends State<StreamingPage> {
                                     color: Color.fromRGBO(36, 52, 71, 0.5),
                                     borderRadius: BorderRadius.all(Radius.circular(10))),
                               ),
+=======
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 18.0,
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, bottom: 10.0),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 24, // Image radius
+                                      backgroundImage: NetworkImage(
+                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Anshul Sharma",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                          ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 190.0,
+                              minWidth: 240.0,
+                              maxHeight: 190.0,
+                              maxWidth: 240.0,
+>>>>>>> b55b99f7ec8a16912d4aee19bc12d09b91b4f689
+                            ),
+                            child: new DecoratedBox(
+                              decoration: new BoxDecoration(
+                                  color: Color.fromRGBO(36, 52, 71, 0.5),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
