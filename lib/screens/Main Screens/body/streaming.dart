@@ -7,6 +7,7 @@ import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming_card_tile.dart';
+import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 
 class StreamingPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class StreamingPage extends StatefulWidget {
 }
 
 class _StreamingPageState extends State<StreamingPage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final userDataProv = Provider.of<UserProvider>(context);
@@ -55,7 +57,7 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(liveStreamPageRoute);
+                      Navigator.of(context).poppk, AndPushNamed(liveStreamPageRoute);
                     },
                     child: RichText(
                       text: const TextSpan(
@@ -63,16 +65,20 @@ class _StreamingPageState extends State<StreamingPage> {
                           WidgetSpan(
                             child: Icon(
                               Icons.add,
-                              color: pureWhiteBackgroundColor,
+                              color: redShade,
+                              size: 20,
                             ),
                           ),
                           WidgetSpan(
-                              child: Text(
-                            "New",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "PoppinsMedium",
-                              color: pureWhiteBackgroundColor,
+                              child: Padding(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              "Go Live",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: "PoppinsMedium",
+                                color: redShade,
+                              ),
                             ),
                           )),
                         ],
@@ -120,7 +126,7 @@ class _StreamingPageState extends State<StreamingPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Pied Piper Live",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -174,7 +180,7 @@ class _StreamingPageState extends State<StreamingPage> {
                       child: Row(
                         children: [
                           Text(
-                            "Popular Streams",
+                            'Popular Streams',
                             style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height / 30,
                              fontFamily: "PoppinsMedium",
@@ -184,106 +190,56 @@ class _StreamingPageState extends State<StreamingPage> {
                         ],
                       ),
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 18.0,
+                      ),
+                      child: Stack(
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 1.6,
-                              height: MediaQuery.of(context).size.width / 1.6,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(36, 52, 71, 0.5),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+                          Positioned.fill(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 14.0, bottom: 10.0),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 24, // Image radius
+                                      backgroundImage: NetworkImage(
+                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Anshul Sharma",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 1.6,
-                              height: MediaQuery.of(context).size.width / 1.6,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(36, 52, 71, 0.5),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
+                          ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              minHeight: 190.0,
+                              minWidth: 240.0,
+                              maxHeight: 190.0,
+                              maxWidth: 240.0,
                             ),
-                          ),
-                          
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 1.6,
-                              height: MediaQuery.of(context).size.width / 1.6,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(36, 52, 71, 0.5),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
+                            child: new DecoratedBox(
+                              decoration: new BoxDecoration(
+                                  color: Color.fromRGBO(36, 52, 71, 0.5),
+                                  borderRadius: BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //     top: 18.0,
-                    //   ),
-                    //   child: Stack(
-                    //     children: [
-                    //       Positioned.fill(
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.only(
-                    //               left: 14.0, bottom: 10.0),
-                    //           child: Align(
-                    //             alignment: Alignment.bottomCenter,
-                    //             child: Row(
-                    //               crossAxisAlignment: CrossAxisAlignment.center,
-                    //               children: [
-                    //                 CircleAvatar(
-                    //                   radius: 24, // Image radius
-                    //                   backgroundImage: NetworkImage(
-                    //                       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
-                    //                 ),
-                    //                 SizedBox(
-                    //                   width: 10,
-                    //                 ),
-                    //                 Text(
-                    //                   "Anshul Sharma",
-                    //                   style: TextStyle(
-                    //                       fontSize: 18,
-                    //                       fontWeight: FontWeight.w500,
-                    //                       color: Colors.white),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       ConstrainedBox(
-                    //         constraints: new BoxConstraints(
-                    //           minHeight: 190.0,
-                    //           minWidth: 240.0,
-                    //           maxHeight: 190.0,
-                    //           maxWidth: 240.0,
-                    //         ),
-                    //         child: new DecoratedBox(
-                    //           decoration: new BoxDecoration(
-                    //               color: Color.fromRGBO(36, 52, 71, 0.5),
-                    //               borderRadius:
-                    //                   BorderRadius.all(Radius.circular(10))),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -293,4 +249,6 @@ class _StreamingPageState extends State<StreamingPage> {
       ),
     );
   }
+
+  Future<void> goLive(context) async {}
 }

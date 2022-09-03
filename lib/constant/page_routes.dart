@@ -8,3 +8,4 @@ const String mainScreenRoute = '/mainScreen';
 const String confirmLoginRoute = '/confirm/login';
 const String onBoardingScreenRoute = "/onBoardingScreen";
 const String liveStreamPageRoute = "/liveStreamPage";
+const String normalLoginPageRoute = "/normalLogin";
