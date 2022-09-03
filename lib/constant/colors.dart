@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 const primaryColor = Color.fromRGBO(20, 29, 38, 1);
 const dimmedWhiteBackgroundColor = Color.fromRGBO(246, 246, 246, 1);
 const pureWhiteBackgroundColor = Color.fromRGBO(255, 255, 255, 1);
+const redShade = Color.fromRGBO(240, 84, 84,1);
+
 const grayButtonColor = Color.fromRGBO(192, 192, 192, 1);
 const deepBlueColor = Color.fromRGBO(41, 50, 65, 1);
 const greenColor = Color.fromRGBO(0, 153, 0, 1);
