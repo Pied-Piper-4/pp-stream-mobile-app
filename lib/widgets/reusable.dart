@@ -172,7 +172,7 @@ Widget serviceComponent({
                 ),
               ),
               const SizedBox(
-                height: 3,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -198,16 +198,7 @@ Widget serviceComponent({
                       decorationStyle: TextDecorationStyle.dotted,
                     ),
                   ),
-                  Text(
-                    'Context Policy',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: primaryColor,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.dotted,
-                    ),
-                  ),
+                  
                 ],
               ),
             ],
@@ -286,7 +277,7 @@ Widget onBoardingSlide(
         child: SvgPicture.asset(
           imagePath!,
         ),
-        height: height * 0.3,
+        height: height * 0.18,
         width: width,
       ),
       SizedBox(
@@ -297,7 +288,7 @@ Widget onBoardingSlide(
         textAlign: TextAlign.center,
         style: const TextStyle(
           color: deepBlueColor,
-          fontSize: 33,
+          fontSize: 23,
           fontFamily: "Poppins",
         ),
       ),
@@ -309,7 +300,7 @@ Widget onBoardingSlide(
           height: 1.5,
           color: grayButtonColor,
           fontFamily: "PoppinsMedium",
-          fontSize: 17,
+          fontSize: 15,
         ),
       ),
     ],

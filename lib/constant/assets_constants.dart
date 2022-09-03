@@ -12,3 +12,5 @@ const String getStartedIcon = "assets/icons/getStarted.svg";
 
 const String appIcon = "assets/icons/appIcon.png";
 const String password = "assets/icons/password.svg";
+
+const String banner = "assets/images/banner.png";
