@@ -8,6 +8,8 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pp_stream_mobile_app/constant/agora.dart';
+import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/screens/Main%20Screens/chats/messages.dart';
 
 class LiveStream extends StatefulWidget {
   const LiveStream({Key? key}) : super(key: key);
@@ -20,6 +22,9 @@ class _LiveStreamState extends State<LiveStream> {
   bool _joined = false;
   int _remoteUid = 0;
   bool _switch = false;
+  bool showChat = false;
+  String _enteredMessage = '';
+  final _controller = TextEditingController();
 
   @override
   void initState() {
@@ -37,8 +42,8 @@ class _LiveStreamState extends State<LiveStream> {
     RtcEngineContext context = RtcEngineContext(AGORA_APP_ID);
     var engine = await RtcEngine.createWithContext(context);
     // Define event handling logic
-    engine.setEventHandler(
-        RtcEngineEventHandler(joinChannelSuccess: (String channel, int uid, int elapsed) {
+    engine.setEventHandler(RtcEngineEventHandler(
+        joinChannelSuccess: (String channel, int uid, int elapsed) {
       print('joinChannelSuccess ${channel} ${uid}');
       setState(() {
         _joined = true;
@@ -67,28 +72,81 @@ class _LiveStreamState extends State<LiveStream> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Streaming page")),
-      body: Stack(
+      appBar: AppBar(
+        title: const Text(
+          "Live Streaming...",
+          style: TextStyle(fontFamily: "Poppins"),
+        ),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              
+              color: primaryColor,
+              // child: _renderRemoteVideo(),
+            ),
+            showChat? Expanded(
+              child: showChatSection(),
+            ):Container(),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        
+        
+        onPressed: () {
+          setState(() {
+            showChat = !showChat;
+          });
+        },
+        backgroundColor: Colors.green,
+        child: Icon(
+          Icons.message,
+        ),
+      ),
+    );
+  }
+
+  Widget showChatSection() {
+    return SizedBox(
+      height: 400,
+      child: Column(
         children: [
-          Center(
-            child: _switch ? _renderRemoteVideo() : _renderLocalPreview(),
+          const Expanded(
+            child: Messages(),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              width: 100,
-              height: 100,
-              color: Colors.blue,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _switch = !_switch;
-                  });
-                },
-                child: Center(
-                  child: _switch ? _renderLocalPreview() : _renderRemoteVideo(),
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: "Send a message...",
+                      labelText: "Send a message...",
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _enteredMessage = value;
+                      });
+                    },
+                  ),
                 ),
-              ),
+                IconButton(
+                  onPressed: _enteredMessage.trim().isEmpty ? null : () {},
+                  icon: Icon(
+                    Icons.send,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -97,7 +155,8 @@ class _LiveStreamState extends State<LiveStream> {
   }
 
   Widget _renderRemoteVideo() {
-    if (_remoteUid != 0 && Platform.isAndroid || _remoteUid != 0 && Platform.isIOS) {
+    if (_remoteUid != 0 && Platform.isAndroid ||
+        _remoteUid != 0 && Platform.isIOS) {
       return RtcRemoteView.SurfaceView(
         uid: _remoteUid,
         channelId: "boanerges",
@@ -135,5 +194,10 @@ class _LiveStreamState extends State<LiveStream> {
         textAlign: TextAlign.center,
       );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
