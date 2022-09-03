@@ -26,7 +26,10 @@ class _StreamingPageState extends State<StreamingPage> {
       backgroundColor: primaryColor,
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.only(left: 14.0, right: 14, top: 40),
+          padding: EdgeInsets.only(
+              left: 14.0,
+              right: 14,
+              top: MediaQuery.of(context).size.height / 15),
           child: Column(
             children: [
               Row(
@@ -54,8 +57,7 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
-                      _modalBottomSheetMenu();
+                      Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
                     },
                     child: RichText(
                       text: const TextSpan(
@@ -99,7 +101,8 @@ class _StreamingPageState extends State<StreamingPage> {
                       child: const DecoratedBox(
                         decoration: BoxDecoration(
                             color: Color.fromRGBO(36, 52, 71, 0.5),
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                       ),
                     ),
                     Padding(
@@ -109,7 +112,8 @@ class _StreamingPageState extends State<StreamingPage> {
                         children: [
                           CircleAvatar(
                             radius: 26, // Image radius
-                            backgroundImage: NetworkImage(userDataProv.user?.pic ??
+                            backgroundImage: NetworkImage(userDataProv
+                                    .user?.pic ??
                                 "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg"),
                           ),
                           const SizedBox(
@@ -172,17 +176,17 @@ class _StreamingPageState extends State<StreamingPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
+                      padding: const EdgeInsets.only(top: 30.0,bottom: 10,),
                       child: Row(
                         children: [
-                          const Text(
+                          Text(
                             'Popular Streams',
                             style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 22,
-                              fontFamily: "PoppinsMedium",
+                              fontSize: MediaQuery.of(context).size.height / 30,
+                             fontFamily: "PoppinsMedium",
+                              color: pureWhiteBackgroundColor.withOpacity(.7),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -200,15 +204,15 @@ class _StreamingPageState extends State<StreamingPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const CircleAvatar(
+                                    CircleAvatar(
                                       radius: 24, // Image radius
                                       backgroundImage: NetworkImage(
                                           'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 10,
                                     ),
-                                    const Text(
+                                    Text(
                                       "Anshul Sharma",
                                       style: TextStyle(
                                           fontSize: 18,
@@ -229,8 +233,8 @@ class _StreamingPageState extends State<StreamingPage> {
                             ),
                             child: new DecoratedBox(
                               decoration: new BoxDecoration(
-                                  color: const Color.fromRGBO(36, 52, 71, 0.5),
-                                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                  color: Color.fromRGBO(36, 52, 71, 0.5),
+                                  borderRadius: BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
                         ],
@@ -243,67 +247,6 @@ class _StreamingPageState extends State<StreamingPage> {
           ),
         ),
       ),
-    );
-  }
-
-  void _modalBottomSheetMenu() {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(50),
-        ),
-      ),
-      builder: (builder) {
-        return Container(
-          height: 350.0,
-          color: Colors.transparent, //could change this to Color(0xFF737373),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(
-                  30.0,
-                ),
-              ),
-            ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  RoundedInput(
-                    onSaved: (data) {},
-                    onChanged: (data) {},
-                    hintText: "Stream Title",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  RoundedInput(
-                    onSaved: (data) {},
-                    onChanged: (data) {},
-                    hintText: "Bio",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  roundedButton(
-                    onTap: () {},
-                    text: "Go Live",
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    backgroundColor: primaryColor,
-                    textColor: Colors.white,
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 

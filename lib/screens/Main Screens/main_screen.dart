@@ -37,7 +37,12 @@ class _MainScreenState extends State<MainScreen> {
       body: const [
         StreamingPage(),
         ProfilePage(),
+<<<<<<< HEAD
         SettingsPage(),
+=======
+        // SettingsPage(),
+        
+>>>>>>> 01be5a9429e61de280be0e1f71f0b1c44a4c999d
       ].elementAt(selectedNav),
       bottomNavigationBar: DotNavigationBar(
         margin: const EdgeInsets.only(left: 10, right: 10),
@@ -63,6 +68,7 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.person),
             selectedColor: primaryColor,
           ),
+<<<<<<< HEAD
 
           /// settings
           DotNavigationBarItem(
@@ -71,6 +77,15 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+=======
+            /// settings
+            // DotNavigationBarItem(
+            //   icon: Icon(Icons.settings),
+            //   selectedColor:  primaryColor,
+            // ),
+          ],
+        ),
+>>>>>>> 01be5a9429e61de280be0e1f71f0b1c44a4c999d
     );
   }
 
