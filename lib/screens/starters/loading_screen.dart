@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mobile_app/constant/colors.dart';
-import 'package:mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+
 
 
 class LoadingScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: const [
             SpinKitChasingDots(
               color: deepBlueColor,
               size: 50.0,

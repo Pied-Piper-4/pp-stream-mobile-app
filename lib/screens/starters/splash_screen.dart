@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/constant/assets_constants.dart';
-import 'package:mobile_app/constant/colors.dart';
-import 'package:mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
+import 'package:pp_stream_mobile_app/constant/colors.dart';
+
+import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -26,13 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: dimmedWhiteBackgroundColor,
+      backgroundColor: pureWhiteBackgroundColor,
       body: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: const Center(
+          child:  Center(
             child: Image(
+              width: MediaQuery.of(context).size.width / 1.5,
               image: AssetImage(appLogo),
             ),
           ),

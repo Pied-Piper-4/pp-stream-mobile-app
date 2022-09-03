@@ -4,3 +4,5 @@ const String splashScreenRoute = '/';
 const String loadingScreenRoute = '/loadingScreen';
 const String loginRoute = '/login';
 const String otpRoute = '/login/otp';
+const String mainScreenRoute = '/mainScreen';
+const String confirmLoginRoute = '/confirm/login';

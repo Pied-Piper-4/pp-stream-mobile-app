@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "142520805243",
+    "project_id": "pp-stream",
+    "storage_bucket": "pp-stream.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142520805243:android:aea1d95f2ef7b108b2ffde",
+        "android_client_info": {
+          "package_name": "com.ppstream.mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142520805243-j3pjng1pnn12ilpgqm0pnsme90l0dc2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrcd70zlz5kjlP4AGKYp-pz7CKRkUv4xY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142520805243-j3pjng1pnn12ilpgqm0pnsme90l0dc2e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "142520805243-v3fa6ku4jf98djfuq3t40atejtj7or8v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ppstream.mobileApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
