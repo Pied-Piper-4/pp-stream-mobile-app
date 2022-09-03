@@ -43,6 +43,7 @@ class _ConfirmLoginScreenState extends State<ConfirmLoginScreen> {
             children: <Widget>[
               SvgPicture.asset(
                 checkLogo,
+                color: primaryColor,
                 width: MediaQuery.of(context).size.width / 2.5,
               ),
               Padding(

@@ -149,11 +149,9 @@ Widget dataCollectionFormField({
   );
 }
 
-Widget serviceComponent(
-  {
-    required BuildContext context,
-  }
-) {
+Widget serviceComponent({
+  required BuildContext context,
+}) {
   return Container(
     child: Column(
       children: [
@@ -276,4 +274,44 @@ class ShowLoadingDialogWidget {
       },
     );
   }
+}
+
+Widget onBoardingSlide(
+    {Size? size, String? imagePath, String? title, String? desc}) {
+  double height = size!.height;
+  double width = size.width;
+  return Column(
+    children: [
+      SizedBox(
+        child: SvgPicture.asset(
+          imagePath!,
+        ),
+        height: height * 0.3,
+        width: width,
+      ),
+      SizedBox(
+        height: height * 0.05,
+      ),
+      Text(
+        title!,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: deepBlueColor,
+          fontSize: 33,
+          fontFamily: "Poppins",
+        ),
+      ),
+      SizedBox(height: height * 0.02),
+      Text(
+        desc!,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          height: 1.5,
+          color: grayButtonColor,
+          fontFamily: "PoppinsMedium",
+          fontSize: 17,
+        ),
+      ),
+    ],
+  );
 }

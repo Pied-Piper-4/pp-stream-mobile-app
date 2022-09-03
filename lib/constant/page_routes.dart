@@ -6,3 +6,4 @@ const String loginRoute = '/login';
 const String otpRoute = '/login/otp';
 const String mainScreenRoute = '/mainScreen';
 const String confirmLoginRoute = '/confirm/login';
+const String onBoardingScreenRoute = "/onBoardingScreen";

@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ApiResponse? response = await UserRequests.googleAuth();
       if (response!.hasError) {
         Navigator.of(context).pop();
-        snackBar(message:response.data);
+        snackBar(message: response.data);
         print(response.data);
         return;
       }
@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(
-           
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
@@ -90,23 +89,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Column(
                   children: [
+                    // roundedIconButton(
+                    //   svgImagePath: password,
+                    //   text: "Traditional Login",
+                    //   onTap: () async {
+                    //     // await signInWithGoogle(context);
+                    //      Navigator.of(context).pushNamed(confirmLoginRoute);
+
+                    //   },
+                    //   width: MediaQuery.of(context).size.width,
+                    // ),
+                    // const SizedBox(height: 10),
+                    // horizontalDivider(context),
                     roundedIconButton(
                       svgImagePath: googleLogo,
                       text: "Sign in with Google",
                       onTap: () async {
                         // await signInWithGoogle(context);
+                        Navigator.of(context).pushNamed(confirmLoginRoute);
                       },
                       width: MediaQuery.of(context).size.width,
                     ),
-                    const SizedBox(height: 10),
-                    horizontalDivider(context),
-                    roundedIconButton(
-                      svgImagePath: appleLogo,
-                      text: "Sign in with Apple",
-                      onTap: () {},
-                      width: MediaQuery.of(context).size.width,
+                    // roundedIconButton(
+                    //   svgImagePath: appleLogo,
+                    //   text: "Sign in with Apple",
+                    //   onTap: () {},
+                    //   width: MediaQuery.of(context).size.width,
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 60.0),
+                      child: serviceComponent(context: context),
                     ),
-                    serviceComponent(context: context),
                   ],
                 ),
               ),
@@ -116,6 +129,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  
 }

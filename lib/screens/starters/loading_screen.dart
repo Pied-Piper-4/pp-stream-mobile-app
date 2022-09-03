@@ -19,7 +19,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     timer = Timer(
       const Duration(seconds: 2),
-      () => Navigator.of(context).popAndPushNamed(loginRoute),
+      () => Navigator.of(context).popAndPushNamed(onBoardingScreenRoute),
     );
     super.initState();
   }
