@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming_card_tile.dart';
+import 'package:provider/provider.dart';
 
 class StreamingPage extends StatefulWidget {
   const StreamingPage({Key? key}) : super(key: key);
@@ -16,94 +18,199 @@ class StreamingPage extends StatefulWidget {
 class _StreamingPageState extends State<StreamingPage> {
   @override
   Widget build(BuildContext context) {
+    final userDataProv = Provider.of<UserProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
+      backgroundColor: Color.fromRGBO(20, 29, 38, 1),
+      body: Container(
         child: Padding(
-          padding: const EdgeInsets.only(top:20.0),
+          padding: const EdgeInsets.only(left: 14.0, right: 14, top: 40),
           child: Column(
             children: [
-              _createListView(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _createListView() {
-    return Column(
-      children: [
-        ListView.builder(
-            itemCount: 10,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return Center(
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      child: Stack(
+              Row(
+                children: [
+                  Text(
+                    "Let's",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height / 30,
+                      fontWeight: FontWeight.w500,
+                      color: pureWhiteBackgroundColor,
+                    ),
+                  ),
+                  Text(
+                    " Discover",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height / 30,
+                      fontWeight: FontWeight.w500,
+                      color: yellowColor,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 14.0),
+                child: Column(
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: 190.0,
+                        minWidth: 400.0,
+                        maxHeight: 190.0,
+                        maxWidth: 400.0,
+                      ),
+                      child: const DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(36, 52, 71, 0.5),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 7,
-                              sigmaY: 7,
-                            ),
+                          CircleAvatar(
+                            radius: 26, // Image radius
+                            backgroundImage: NetworkImage(userDataProv
+                                    .user?.pic ??
+                                "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg"),
                           ),
-                          Container(
-                            child: StreamingCardsTile(
-                              appName: "Twitch",
-                              sessionId: "123456789",
-                              date: DateTime.now(),
-                              streamingStatus: 0,
-                            ),
+                          const SizedBox(
+                            width: 14,
                           ),
-                          Positioned(
-                            top: 20.0,
-                            right: 10.0,
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('Unsubscribe'),
-                                      content: Text(
-                                          'Are you sure you want to unsubscribe?'),
-                                      actions: [
-                                        FlatButton(
-                                          child: Text('Unsubscribe'),
-                                          onPressed: () {},
-                                        ),
-                                        FlatButton(
-                                          child: Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Icon(
-                                Icons.settings,
-                                color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Pied Piper Live",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: "PoppinsMedium",
+                                        color: Colors.white),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 0.0),
+                                    child: Text(
+                                      userDataProv.user?.name ?? "PP User",
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white54),
+                                    ),
+                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(top: 6.0),
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Text(
+                                  //         "133 Views",
+                                  //         style: TextStyle(
+                                  //             fontSize: 16,
+                                  //             fontWeight: FontWeight.w400,
+                                  //             color: Colors.white54),
+                                  //       ),
+                                  //       SizedBox(
+                                  //         width: 10,
+                                  //       ),
+                                  //       Text(
+                                  //         "12 mins",
+                                  //         style: TextStyle(
+                                  //             fontSize: 16,
+                                  //             fontWeight: FontWeight.w400,
+                                  //             color: Colors.white54),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Popular Streams',
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 18.0,
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 10.0),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 24, // Image radius
+                                        backgroundImage: NetworkImage(
+                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Anshul Sharma",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ConstrainedBox(
+                              constraints: new BoxConstraints(
+                                minHeight: 190.0,
+                                minWidth: 240.0,
+                                maxHeight: 190.0,
+                                maxWidth: 240.0,
+                              ),
+                              child: new DecoratedBox(
+                                decoration: new BoxDecoration(
+                                    color: Color.fromRGBO(36, 52, 71, 0.5),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            }),
-      ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
