@@ -27,23 +27,52 @@ class _StreamingPageState extends State<StreamingPage> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Let's",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height / 30,
-                      fontWeight: FontWeight.w500,
-                      color: pureWhiteBackgroundColor,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "Let's",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 30,
+                          fontWeight: FontWeight.w500,
+                          color: pureWhiteBackgroundColor,
+                        ),
+                      ),
+                      Text(
+                        " Discover",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 30,
+                          fontWeight: FontWeight.w500,
+                          color: yellowColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    " Discover",
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.height / 30,
-                      fontWeight: FontWeight.w500,
-                      color: yellowColor,
+                  GestureDetector(
+                    onTap: (){},
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.add,
+                              color: pureWhiteBackgroundColor,
+                            ),
+                          ),
+                          WidgetSpan(
+                              child: Text(
+                            "New",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: "PoppinsMedium",
+                              color: pureWhiteBackgroundColor,
+                            ),
+                          )),
+                        ],
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
               Padding(
