@@ -79,10 +79,7 @@ class _LiveStreamState extends State<LiveStream> {
             "Live Streaming...",
             style: TextStyle(fontFamily: "Poppins"),
           ),
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back),
-          ),
+          automaticallyImplyLeading: false,
           actions: [
             IconButton(
               onPressed: () {
@@ -113,37 +110,44 @@ class _LiveStreamState extends State<LiveStream> {
                           Expanded(
                             child: Messages(),
                           ),
-                          Container(
-                            height: 50,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black.withOpacity(.5),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextField(
-                                    controller: _controller,
-                                    onChanged: (value) {
-                                      _enteredMessage = value;
-                                    },
-                                    decoration: const InputDecoration(
-                                      hintText: "Enter a message...",
-                                      hintStyle: TextStyle(
-                                        color: pureWhiteBackgroundColor,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, right: 10, bottom: 10),
+                            child: Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      style: TextStyle(
+                                        color: pureWhiteBackgroundColor
+                                            .withOpacity(.7),
                                       ),
-                                      border: InputBorder.none,
+                                      controller: _controller,
+                                      onChanged: (value) {
+                                        _enteredMessage = value;
+                                      },
+                                      decoration: const InputDecoration(
+                                        hintText: "Enter a message...",
+                                        hintStyle: TextStyle(
+                                          color: pureWhiteBackgroundColor,
+                                        ),
+                                        border: InputBorder.none,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    _controller.clear();
-                                  },
-                                  icon: const Icon(
-                                    Icons.send,
-                                    color: pureWhiteBackgroundColor,
+                                  IconButton(
+                                    onPressed: () {
+                                      _controller.clear();
+                                    },
+                                    icon: const Icon(
+                                      Icons.send,
+                                      color: pureWhiteBackgroundColor,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -169,12 +173,15 @@ class _LiveStreamState extends State<LiveStream> {
           const Expanded(
             child: Messages(),
           ),
-          Container(
-            padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+          Padding(
+            padding: EdgeInsets.only(bottom: 50, left: 23, right: 15),
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
+                    style: TextStyle(
+                      color: pureWhiteBackgroundColor.withOpacity(.7),
+                    ),
                     controller: _controller,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
