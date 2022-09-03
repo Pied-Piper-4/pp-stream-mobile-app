@@ -1,15 +1,13 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
-import 'package:pp_stream_mobile_app/constant/page_routes.dart';
-import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/services/user_request.dart';
 import 'package:pp_stream_mobile_app/utils/interfaces/api_response.dart';
-import 'package:pp_stream_mobile_app/utils/shared_preferences.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey1 = GlobalKey<FormState>();
   final _scaffoldKey1 = GlobalKey<ScaffoldState>();
   final _scaffoldKey2 = GlobalKey<ScaffoldState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
   void initState() {
     // TODO: implement initStatex
@@ -37,20 +37,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       ApiResponse? response = await UserRequests.googleAuth();
-      if (response!.hasError) {
-        Navigator.of(context).pop();
-        snackBar(message: response.data);
-        print(response.data);
-        return;
+      if (response == "success") {
+        print("Working");
+      }else if(response=='error'){
+          print('failed to fetch');
       }
-
+      else{
+        print('error');
+      }
       Navigator.of(context).pop();
-      PPStreamSharedPreference.persistUserLoginData(response.data);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isGoogle', true);
-      final userProv = Provider.of<UserProvider>(context, listen: false);
-      userProv.setUser(response.data);
-      Navigator.of(context).pushNamed(confirmLoginRoute);
+
+      // PPStreamSharedPreference.persistUserLoginData(response.data);
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setBool('isGoogle', true);
+      // final userProv = Provider.of<UserProvider>(context, listen: false);
+      // userProv.setUser(response.data);
+      // Navigator.of(context).pushNamed(confirmLoginRoute);
     } catch (e) {
       print(e);
 
@@ -105,8 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       svgImagePath: googleLogo,
                       text: "Sign in with Google",
                       onTap: () async {
-                        // await signInWithGoogle(context);
-                        Navigator.of(context).pushNamed(confirmLoginRoute);
+                        await signInWithGoogle(context);
+                        // Navigator.of(context).pushNamed(confirmLoginRoute);
                       },
                       width: MediaQuery.of(context).size.width,
                     ),

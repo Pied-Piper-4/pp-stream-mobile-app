@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pp_stream_mobile_app/constant/api_routes.dart';
 import 'package:pp_stream_mobile_app/models/user.dart';
@@ -7,6 +8,7 @@ import 'dart:convert';
 import 'dart:io';
 
 class UserRequests {
+  static final FirebaseAuth auth = FirebaseAuth.instance;
   static final _googleAuth = GoogleSignIn(
     scopes: <String>[
       'email',
@@ -25,31 +27,58 @@ class UserRequests {
         GoogleSignInAuthentication? googleAuth =
             await googleResponse.authentication;
 
-        final response = await http.post(
-          url,
-          body: json.encode({
-            "access_token": googleAuth.idToken,
-            "platform": Platform.isAndroid ? "android" : "ios",
-          }),
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-          },
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
         );
 
-        var responseJson = json.decode(response.body);
-        if (responseJson['status'] == 'success') {
-          return ApiResponse.success(
-            UserModel.fromJson(
-              {
-                ...responseJson["data"],
-                "authToken": responseJson["authToken"],
-                "userId": responseJson?["data"]["_id"],
-              },
-            ),
+        final UserCredential userCred =
+            await UserRequests.auth.signInWithCredential(credential);
+
+        if (userCred.user != null) {
+          final response = await http.post(
+            url,
+            body: json.encode({
+              "name": userCred.user!.displayName,
+              "email": userCred.user!.email,
+              "pic": userCred.user!.photoURL,
+            }),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
           );
+
+          var responseJson = json.decode(response.body);
+          if (responseJson['status'] == 'success') {
+            return ApiResponse.success(
+              UserModel.fromJson(
+                {
+                  ...responseJson["data"],
+                  "authToken": responseJson["authToken"],
+                  "userId": responseJson?["data"]["_id"],
+                },
+              ),
+            );
+          }
+          return ApiResponse(hasError: true, data: responseJson['data']);
         }
 
-        return ApiResponse(hasError: true, data: responseJson['data']);
+        // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        //   print(user?.email);
+        //   if (user == null) {
+        //     print('User is currently signed out!');
+        //   } else {
+        //     print('User is signed in!');
+
+        //     final userData = UserModel(
+        //       email: user.email,
+        //       name: user.displayName,
+        //       phone: user.phoneNumber,
+        //     );
+        //   }
+        // });
+        // return ApiResponse.success("success");
+
       }
     } catch (e) {
       return ApiResponse.withError(e);
