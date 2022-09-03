@@ -10,4 +10,9 @@ class MeetingsProvider extends ChangeNotifier {
     _meetings.add(meeting);
     notifyListeners();
   }
+
+  void setAllMeetings(List<MeetingModel> meetings) {
+    _meetings = meetings;
+    notifyListeners();
+  }
 }

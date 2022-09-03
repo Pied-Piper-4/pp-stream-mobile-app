@@ -55,4 +55,42 @@ class MeetingsApiRequest {
       return ApiResponse.withError(e);
     }
   }
+
+  static Future<ApiResponse?> getMeetings({
+    required String? userId,
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.getAllUserMeetingsEndpoint(userId!));
+
+    try {
+      http.Response response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson);
+
+      if (responseJson['status'] == 'success') {
+        List<MeetingModel> meetings = [];
+        for (var meeting in responseJson['data']) {
+          meetings.add(MeetingModel.fromJson(meeting));
+        }
+        return ApiResponse.success(
+          meetings,
+        );
+      }
+
+      return ApiResponse(
+        hasError: true,
+        data: responseJson?['message'] ?? "Error",
+      );
+    } catch (e) {
+      print("wow");
+      return ApiResponse.withError(e);
+    }
+  }
 }
