@@ -18,6 +18,7 @@ class StreamingPage extends StatefulWidget {
 }
 
 class _StreamingPageState extends State<StreamingPage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final userDataProv = Provider.of<UserProvider>(context);
@@ -263,39 +264,44 @@ class _StreamingPageState extends State<StreamingPage> {
                 ),
               ),
             ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                RoundedInput(
-                  onSaved: (data) {},
-                  onChanged: (data) {},
-                  hintText: "Stream Title",
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                RoundedInput(
-                  onSaved: (data) {},
-                  onChanged: (data) {},
-                  hintText: "Bio",
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                roundedButton(
-                  onTap: () {},
-                  text: "Go Live",
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  backgroundColor: primaryColor,
-                  textColor: Colors.white,
-                )
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  RoundedInput(
+                    onSaved: (data) {},
+                    onChanged: (data) {},
+                    hintText: "Stream Title",
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  RoundedInput(
+                    onSaved: (data) {},
+                    onChanged: (data) {},
+                    hintText: "Bio",
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  roundedButton(
+                    onTap: () {},
+                    text: "Go Live",
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    backgroundColor: primaryColor,
+                    textColor: Colors.white,
+                  )
+                ],
+              ),
             ),
           ),
         );
       },
     );
   }
+
+  Future<void> goLive(context) async {}
 }
