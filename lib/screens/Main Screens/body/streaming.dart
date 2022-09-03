@@ -20,7 +20,7 @@ class _StreamingPageState extends State<StreamingPage> {
   Widget build(BuildContext context) {
     final userDataProv = Provider.of<UserProvider>(context);
     return Scaffold(
-      backgroundColor: Color.fromRGBO(20, 29, 38, 1),
+      backgroundColor: primaryColor,
       body: Container(
         child: Padding(
           padding: const EdgeInsets.only(left: 14.0, right: 14, top: 40),

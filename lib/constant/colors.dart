@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Following are the major colors used in the app
-const primaryColor = Color.fromRGBO(35, 60, 123, 1);
+const primaryColor = Color.fromRGBO(20, 29, 38, 1);
 const dimmedWhiteBackgroundColor = Color.fromRGBO(246, 246, 246, 1);
 const pureWhiteBackgroundColor = Color.fromRGBO(255, 255, 255, 1);
 const grayButtonColor = Color.fromRGBO(192, 192, 192, 1);
