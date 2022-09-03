@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -198,7 +199,6 @@ Widget serviceComponent({
                       decorationStyle: TextDecorationStyle.dotted,
                     ),
                   ),
-                  
                 ],
               ),
             ],
@@ -235,8 +235,7 @@ class ShowLoadingDialogWidget {
       builder: (builder) {
         return Dialog(
           elevation: 0.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Container(
             height: 150.0,
             padding: const EdgeInsets.all(20.0),
@@ -267,8 +266,7 @@ class ShowLoadingDialogWidget {
   }
 }
 
-Widget onBoardingSlide(
-    {Size? size, String? imagePath, String? title, String? desc}) {
+Widget onBoardingSlide({Size? size, String? imagePath, String? title, String? desc}) {
   double height = size!.height;
   double width = size.width;
   return Column(
@@ -304,5 +302,162 @@ Widget onBoardingSlide(
         ),
       ),
     ],
+  );
+}
+
+class RoundedInput extends StatelessWidget {
+  const RoundedInput({
+    Key? key,
+    this.validator,
+    @required this.onSaved,
+    @required this.onChanged,
+    this.onPressObscureText,
+    this.hintText,
+    this.labelText,
+    this.initialValue,
+    this.prefixIcon,
+    this.keyboardType,
+    this.isPasswordField = false,
+    this.obscureText = false,
+    this.denySpace = true,
+    this.maxLines,
+  }) : super(key: key);
+
+  final String? hintText;
+  final String? initialValue;
+  final String? labelText;
+  final String? Function(String?)? validator;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
+  final bool? isPasswordField;
+  final bool obscureText;
+  final void Function()? onPressObscureText;
+  final void Function(String?)? onSaved;
+  final void Function(String?)? onChanged;
+  final bool? denySpace;
+  final int? maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    return SizedBox(
+      width: width * 0.8,
+      child: TextFormField(
+        maxLines: maxLines ?? 1,
+        initialValue: initialValue ?? "", // Initial value
+        cursorColor: HexColor(placeholderColor),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        keyboardType: keyboardType,
+        validator: validator,
+        obscureText: isPasswordField! ? obscureText : false,
+        onChanged: onChanged, // On change
+        inputFormatters: denySpace!
+            ? [
+                FilteringTextInputFormatter.deny(RegExp('[ ]')),
+              ]
+            : null,
+        onSaved: onSaved, // On save
+        decoration: InputDecoration(
+          suffixIcon: isPasswordField!
+              ? IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility : Icons.visibility_off,
+                    color: HexColor(buttonGrayText),
+                  ),
+                  onPressed: onPressObscureText,
+                )
+              : null,
+          prefixIcon: prefixIcon,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: HexColor(
+                inputBorderGray,
+              ),
+            ),
+          ),
+          fillColor: HexColor(inputBorderGray),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: HexColor(
+                inputBorderGray,
+              ),
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: HexColor(
+              placeholderColor,
+            ),
+          ),
+          labelText: labelText,
+          labelStyle: TextStyle(
+            color: HexColor(
+              placeholderColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget roundedButton({
+  @required void Function()? onTap,
+  @required String? text,
+  @required double? width,
+  Color? backgroundColor,
+  Color? textColor,
+}) {
+  return InkWell(
+    onTap: onTap!,
+    customBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Container(
+      width: width! * 0.8,
+      height: 70,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: backgroundColor ?? Colors.white,
+        border: Border.all(
+          color: HexColor("#dbdad7"),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: HexColor("#dbdad7"),
+            offset: const Offset(0, 0),
+            blurRadius: 10,
+            spreadRadius: 5,
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text!,
+            style: TextStyle(
+              color: textColor ?? HexColor("#928f87"),
+            ),
+          )
+        ],
+      ),
+    ),
   );
 }

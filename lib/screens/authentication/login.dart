@@ -36,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> signInWithGoogle(context) async {
-    ShowLoadingDialogWidget.showDialogue(
-        context: context, message: "Processing...");
+    ShowLoadingDialogWidget.showDialogue(context: context, message: "Processing...");
 
     try {
       ApiResponse? response = await UserRequests.googleAuth();
@@ -92,17 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Column(
                   children: [
-                    // roundedIconButton(
-                    //   svgImagePath: password,
-                    //   text: "Traditional Login",
-                    //   onTap: () async {
-                    //     // await signInWithGoogle(context);
-                    //      Navigator.of(context).pushNamed(confirmLoginRoute);
-
-                    //   },
-                    //   width: MediaQuery.of(context).size.width,
-                    // ),
-                    // const SizedBox(height: 10),
+                    roundedIconButton(
+                      svgImagePath: password,
+                      text: "Traditional Login",
+                      onTap: () async {
+                        // await signInWithGoogle(context);
+                        Navigator.of(context).pushNamed(normalLoginPageRoute);
+                      },
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    const SizedBox(height: 10),
                     // horizontalDivider(context),
                     roundedIconButton(
                       svgImagePath: googleLogo,
