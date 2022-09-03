@@ -6,7 +6,12 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/providers/user.dart';
+import 'package:pp_stream_mobile_app/services/user_request.dart';
+import 'package:pp_stream_mobile_app/utils/interfaces/api_response.dart';
+import 'package:pp_stream_mobile_app/utils/shared_preferences.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
+import 'package:provider/provider.dart';
 
 class NormalLogin extends StatefulWidget {
   const NormalLogin({Key? key}) : super(key: key);
@@ -62,7 +67,9 @@ class _NormalLoginState extends State<NormalLogin> {
                         passwordInput(context),
                         const SizedBox(height: 10),
                         roundedButton(
-                          onTap: () {},
+                          onTap: () {
+                            loginIntegration(context);
+                          },
                           text: "Login",
                           width: MediaQuery.of(context).size.width,
                           backgroundColor: primaryColor,
@@ -134,5 +141,41 @@ class _NormalLoginState extends State<NormalLogin> {
       ),
       onChanged: (String? value) {},
     );
+  }
+
+  Future<void> loginIntegration(context) async {
+    if (_formKey.currentState!.validate()) {
+      showDiaglog(context: context, text: 'Login in user...');
+
+      _formKey.currentState!.save();
+
+      try {
+        ApiResponse? user = await UserRequests.emailLogin(
+          email: email,
+          password: password,
+        );
+
+        Navigator.of(context).pop();
+        print("on1");
+        print(user!.hasError);
+        if (!user.hasError) {
+          print("ok");
+          // If there is no error
+          final userProvider = Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(user.data);
+          PPStreamSharedPreference.persistUserLoginData(user.data);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            mainScreenRoute,
+            (Route<dynamic> route) => false,
+          );
+
+          return;
+        }
+      } catch (e) {
+        print(e);
+        Navigator.of(context).pop();
+        return;
+      }
+    }
   }
 }

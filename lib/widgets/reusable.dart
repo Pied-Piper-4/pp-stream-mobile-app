@@ -461,3 +461,65 @@ Widget roundedButton({
     ),
   );
 }
+
+showSnackBar({
+  required BuildContext context,
+  required String text,
+  Color? backgroundColor,
+  int? duration,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      text,
+      style: const TextStyle(
+        fontSize: 16,
+        fontFamily: "Sofiamedium",
+      ),
+      textAlign: TextAlign.center,
+    ),
+    backgroundColor: backgroundColor ?? primaryColor,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10),
+        topRight: Radius.circular(10),
+      ),
+    ),
+    duration: Duration(seconds: duration ?? 3),
+  ));
+}
+
+showDiaglog({@required BuildContext? context, @required String? text}) {
+  return showDialog(
+    context: context!,
+    barrierDismissible: false,
+    builder: (builder) {
+      return Dialog(
+        elevation: 0.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          height: 150.0,
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SpinKitPulse(
+                color: primaryColor,
+                size: 50.0,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                text!,
+                style: TextStyle(
+                  color: primaryColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
