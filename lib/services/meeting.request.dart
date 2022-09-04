@@ -72,7 +72,7 @@ class MeetingsApiRequest {
       );
 
       var responseJson = json.decode(response.body);
-      print(responseJson);
+      print(responseJson['status']);
 
       if (responseJson['status'] == 'success') {
         List<MeetingModel> meetings = [];
@@ -90,6 +90,7 @@ class MeetingsApiRequest {
       );
     } catch (e) {
       print("wow");
+      print(e);
       return ApiResponse.withError(e);
     }
   }

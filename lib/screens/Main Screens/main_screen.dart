@@ -94,6 +94,7 @@ class _MainScreenState extends State<MainScreen> {
           listen: false,
         );
 
+        print(response.data.length);
         meetingsPro.setAllMeetings(response.data);
       }
     } catch (e) {

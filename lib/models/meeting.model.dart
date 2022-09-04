@@ -9,7 +9,7 @@ class MeetingModel {
   String? id;
   DateTime? createdAt;
   String? link;
-  Bool? closed;
+  bool? closed;
   String? token;
 
   MeetingModel({
