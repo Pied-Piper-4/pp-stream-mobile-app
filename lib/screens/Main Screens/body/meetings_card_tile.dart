@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pp_stream_mobile_app/Data/meetings.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/models/meeting.model.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/services/meeting.request.dart';
@@ -14,53 +15,14 @@ import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 
 class MeetingsCardTile extends StatefulWidget {
-  const MeetingsCardTile({Key? key}) : super(key: key);
-
+  const MeetingsCardTile({Key? key, required this.meeting}) : super(key: key);
+  final MeetingModel? meeting;
   @override
   State<MeetingsCardTile> createState() => _MeetingsCardTileState();
 }
 
 class _MeetingsCardTileState extends State<MeetingsCardTile> {
   int _current = 0;
-
-
-  List? meetingsList;
-  void fetchAllMeetings() async {
-    ShowLoadingDialogWidget.showDialogue(
-        context: context, message: "Fetching Your Favourite Meetings...");
-    try {
-      final userDataProv = Provider.of<UserProvider>(context, listen: false);
-
-      ApiResponse? response = await MeetingsApiRequest.getMeetings(
-        userId: userDataProv.user?.userId,
-        token: userDataProv.user?.token,
-      );
-
-      Navigator.of(context).pop();
-
-      if (response!.hasError) {
-        print("error in fetching meetings");
-        snackBar(
-            message: "Oops\! Something went wrong\! We are working on it.",
-            context: context);
-        return;
-      }
-      print(response.data.length);
-      print("1");
-      final meetingsProv =
-          Provider.of<MeetingsProvider>(context, listen: false);
-
-      meetingsProv.setAllMeetings(response.data);
-
-      setState(() {
-        meetingsList = response.data;
-      });
-    } catch (err) {
-      print(err);
-      // Navigator.of(context).pop();
-    }
-  }
-
 
   @override
   void initState() {
@@ -205,7 +167,7 @@ class _MeetingsCardTileState extends State<MeetingsCardTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Ghana Fit Café",
+                        widget.meeting!.title!,
                         style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 18,
@@ -218,7 +180,7 @@ class _MeetingsCardTileState extends State<MeetingsCardTile> {
                       Container(
                         width: MediaQuery.of(context).size.width / 1.9,
                         child: Text(
-                          "zekfkzjbf zed des ezf ze ez ez e ze ez ez ez ",
+                          widget.meeting?.description! ?? "",
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -228,7 +190,7 @@ class _MeetingsCardTileState extends State<MeetingsCardTile> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "40,095 ratings",
+                        "2000",
                         style: TextStyle(
                           fontFamily: "PoppinsMedium",
                           fontSize: 15,

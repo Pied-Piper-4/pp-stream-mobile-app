@@ -7,7 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/meetings_card_tile.dart';
+import 'package:provider/provider.dart';
 
 class AllMeetingsPage extends StatefulWidget {
   const AllMeetingsPage({Key? key}) : super(key: key);
@@ -22,7 +24,7 @@ class _AllMeetingsPageState extends State<AllMeetingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:primaryColor,
+      backgroundColor: primaryColor,
       body: Padding(
         padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width / 20,
@@ -31,7 +33,6 @@ class _AllMeetingsPageState extends State<AllMeetingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        
             Padding(
               padding: EdgeInsets.only(
                 top: 50.0,
@@ -56,12 +57,17 @@ class _AllMeetingsPageState extends State<AllMeetingsPage> {
   }
 
   Widget meetingsCards(context) {
+    final meetingsProv = Provider.of<MeetingsProvider>(context, listen: false);
     return ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.zero,
-        itemCount: 10,
+        itemCount: meetingsProv.publicMeetings.length,
         itemBuilder: (BuildContext ctx, int index) {
-          return MeetingsCardTile();
+          return MeetingsCardTile(
+            meeting:meetingsProv.publicMeetings[index],
+          
+            
+          );
         });
   }
 
@@ -101,6 +107,4 @@ class _AllMeetingsPageState extends State<AllMeetingsPage> {
       ),
     );
   }
-
-
 }
