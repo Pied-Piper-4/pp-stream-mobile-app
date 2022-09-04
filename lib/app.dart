@@ -5,6 +5,7 @@ import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/routes/routes.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/main_screen.dart';
+import 'package:pp_stream_mobile_app/screens/authentication/signup_form.dart';
 import 'package:pp_stream_mobile_app/screens/starters/splash_screen.dart';
 import 'package:pp_stream_mobile_app/screens/stream/livestreaming.dart';
 import 'package:pp_stream_mobile_app/utils/interfaces/user.dart';
@@ -44,7 +45,11 @@ class App extends StatelessWidget {
           ),
         ),
         //changed to login screen
+<<<<<<< HEAD
         home: !isLogged ? const LiveStreamingVideo() : const MainScreen(),
+=======
+        home: !isLogged ? const SplashScreen():const MainScreen(),
+>>>>>>> 6c84c92cac2394806744724a1566ace46854cad6
       ),
     );
   }

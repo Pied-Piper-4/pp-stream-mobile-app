@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
@@ -13,20 +11,27 @@ import 'package:pp_stream_mobile_app/utils/shared_preferences.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 
-class NormalLogin extends StatefulWidget {
-  const NormalLogin({Key? key}) : super(key: key);
+class SignupFormPage extends StatefulWidget {
+  const SignupFormPage({Key? key}) : super(key: key);
 
   @override
-  State<NormalLogin> createState() => _NormalLoginState();
+  State<SignupFormPage> createState() => _SignupFormPageState();
 }
 
-class _NormalLoginState extends State<NormalLogin> {
+class _SignupFormPageState extends State<SignupFormPage> {
   final _scaffoldKey1 = GlobalKey<ScaffoldState>();
   final _scaffoldKey2 = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  String? name = "";
   String? email = "";
   String? password = "";
-  bool obscureText = true;
+  String? confirmPassword = "";
+  bool obscurePasswordText = true;
+  bool obscureConfirmPasswordText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class _NormalLoginState extends State<NormalLogin> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 3,
+                  top: MediaQuery.of(context).size.width / 5,
                 ),
                 child: Center(
                   child: Image(
@@ -53,7 +58,7 @@ class _NormalLoginState extends State<NormalLogin> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 3.5,
+                  top: MediaQuery.of(context).size.width / 10,
                   left: MediaQuery.of(context).size.width / 25,
                   right: MediaQuery.of(context).size.width / 25,
                 ),
@@ -62,22 +67,31 @@ class _NormalLoginState extends State<NormalLogin> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        nameInput(context),
+                        const SizedBox(height: 10),
                         emailInput(context),
                         const SizedBox(height: 10),
                         passwordInput(context),
                         const SizedBox(height: 10),
+                        confirmPasswordInput(context),
+                        const SizedBox(height: 10),
+                        Text(
+                          "By signing up, you agree to our Terms of Service and Privacy Policy",
+                          style: TextStyle(
+                            color: HexColor("#A9A9A9"),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         roundedButton(
                           onTap: () {
-                            loginIntegration(context);
+                            signupIntegration(context);
                           },
-                          text: "Login",
+                          text: "Register",
                           width: MediaQuery.of(context).size.width,
                           backgroundColor: primaryColor,
                           textColor: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.0),
-                          child: serviceComponent(context: context),
                         ),
                       ],
                     ),
@@ -91,11 +105,36 @@ class _NormalLoginState extends State<NormalLogin> {
     );
   }
 
+  Widget nameInput(context) {
+    return RoundedInput(
+      validator: (value) {
+        if (value!.isEmpty || value.length < 3) {
+          return "Please enter your full name";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        setState(() {
+          name = value;
+        });
+      },
+      onChanged: (String? value) {},
+      isPasswordField: false,
+      hintText: 'Please enter your name',
+      keyboardType: TextInputType.emailAddress,
+      labelText: 'Name',
+      prefixIcon: Icon(
+        Icons.person,
+        color: HexColor(grayColor),
+      ),
+    );
+  }
+
   Widget emailInput(context) {
     return RoundedInput(
       validator: MultiValidator([
         RequiredValidator(errorText: 'Email is required'),
-        EmailValidator(errorText: 'enter a valid email address')
+        EmailValidator(errorText: 'Please enter a valid email address')
       ]),
       onSaved: (value) {
         setState(() {
@@ -128,10 +167,10 @@ class _NormalLoginState extends State<NormalLogin> {
       isPasswordField: true,
       hintText: 'Please enter your password',
       keyboardType: TextInputType.emailAddress,
-      obscureText: obscureText,
+      obscureText: obscurePasswordText,
       onPressObscureText: () {
         setState(() {
-          obscureText = !obscureText;
+          obscurePasswordText = !obscurePasswordText;
         });
       },
       labelText: 'Password',
@@ -139,31 +178,74 @@ class _NormalLoginState extends State<NormalLogin> {
         Icons.key,
         color: HexColor(grayColor),
       ),
-      onChanged: (String? value) {},
+      onChanged: (String? value) {
+        setState(() {
+          password = value;
+        });
+      },
     );
   }
 
-  Future<void> loginIntegration(context) async {
+  Widget confirmPasswordInput(context) {
+    return RoundedInput(
+      validator: (value) {
+        if (value != password) {
+          return "Passwords do not match";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        setState(() {
+          confirmPassword = value;
+        });
+      },
+      isPasswordField: true,
+      hintText: 'Please cofirm your password',
+      keyboardType: TextInputType.emailAddress,
+      obscureText: obscureConfirmPasswordText,
+      onPressObscureText: () {
+        setState(() {
+          obscureConfirmPasswordText = !obscureConfirmPasswordText;
+        });
+      },
+      labelText: 'Confirm Password',
+      prefixIcon: Icon(
+        Icons.key,
+        color: HexColor(grayColor),
+      ),
+      onChanged: (String? value) {
+        setState(() {
+          confirmPassword = value;
+        });
+      },
+    );
+  }
+
+  Future<void> signupIntegration(context) async {
     if (_formKey.currentState!.validate()) {
-      showDiaglog(context: context, text: 'Login in user...');
+      showDiaglog(context: context, text: 'Creating user account...');
 
       _formKey.currentState!.save();
 
       try {
-        ApiResponse? user = await UserRequests.emailLogin(
+        ApiResponse? user = await UserRequests.emailSignup(
           email: email,
           password: password,
+          name: name,
         );
 
         Navigator.of(context).pop();
+        print("on1");
         print(user!.hasError);
         if (!user.hasError) {
+          print("ok");
           // If there is no error
-          final userProvider = Provider.of<UserProvider>(context, listen: false);
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
           userProvider.setUser(user.data);
-          PPStreamSharedPreference.persistUserLoginData(user.data);
+          // PPStreamSharedPreference.persistUserLoginData(user.data);
           Navigator.of(context).pushNamedAndRemoveUntil(
-            confirmLoginRoute,
+            normalLoginPageRoute,
             (Route<dynamic> route) => false,
           );
 

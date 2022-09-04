@@ -235,7 +235,8 @@ class ShowLoadingDialogWidget {
       builder: (builder) {
         return Dialog(
           elevation: 0.0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Container(
             height: 150.0,
             padding: const EdgeInsets.all(20.0),
@@ -266,7 +267,8 @@ class ShowLoadingDialogWidget {
   }
 }
 
-Widget onBoardingSlide({Size? size, String? imagePath, String? title, String? desc}) {
+Widget onBoardingSlide(
+    {Size? size, String? imagePath, String? title, String? desc}) {
   double height = size!.height;
   double width = size.width;
   return Column(
@@ -331,6 +333,7 @@ class RoundedInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? isPasswordField;
   final bool obscureText;
+
   final void Function()? onPressObscureText;
   final void Function(String?)? onSaved;
   final void Function(String?)? onChanged;
@@ -345,6 +348,7 @@ class RoundedInput extends StatelessWidget {
       width: width * 0.8,
       child: TextFormField(
         maxLines: maxLines ?? 1,
+
         initialValue: initialValue ?? "", // Initial value
         cursorColor: HexColor(placeholderColor),
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -495,7 +499,8 @@ showDiaglog({@required BuildContext? context, @required String? text}) {
     builder: (builder) {
       return Dialog(
         elevation: 0.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Container(
           height: 150.0,
           padding: const EdgeInsets.all(20.0),

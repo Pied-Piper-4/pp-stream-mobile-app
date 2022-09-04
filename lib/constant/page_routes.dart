@@ -9,3 +9,5 @@ const String confirmLoginRoute = '/confirm/login';
 const String onBoardingScreenRoute = "/onBoardingScreen";
 const String liveStreamPageRoute = "/liveStreamPage";
 const String normalLoginPageRoute = "/normalLogin";
+const String signupOptionsRoute = '/signupOptions';
+const String signupFormPageRoute = '/signupForm';

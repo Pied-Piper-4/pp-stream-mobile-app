@@ -13,14 +13,14 @@ import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupOptionScreen extends StatefulWidget {
+  const SignupOptionScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupOptionScreen> createState() => _SignupOptionScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupOptionScreenState extends State<SignupOptionScreen> {
   final formKey1 = GlobalKey<FormState>();
   final _scaffoldKey1 = GlobalKey<ScaffoldState>();
   final _scaffoldKey2 = GlobalKey<ScaffoldState>();
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // });
   }
 
-  Future<void> signInWithGoogle(context) async {
+  Future<void> signupWithGoogle(context) async {
     ShowLoadingDialogWidget.showDialogue(
         context: context, message: "Processing...");
 
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       print(e);
 
-      print("error on login screen");
+      print("error on signup screen");
     }
   }
 
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 6,
+                  top: MediaQuery.of(context).size.width / 4.2,
                   left: MediaQuery.of(context).size.width / 25,
                   right: MediaQuery.of(context).size.width / 25,
                 ),
@@ -94,39 +94,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     roundedIconButton(
                       svgImagePath: password,
-                      text: "Traditional Login",
-                      onTap: () async {
-                        // await signInWithGoogle(context);
-                        Navigator.of(context).pushNamed(normalLoginPageRoute);
-                      },
+                      text: "Traditional Signup",
+                      onTap: ()=>Navigator.pushNamed(context, signupFormPageRoute),
                       width: MediaQuery.of(context).size.width,
                     ),
-                    const SizedBox(height: 10),
-                    // horizontalDivider(context),
+                   
+                    horizontalDivider(context),
                     roundedIconButton(
                       svgImagePath: googleLogo,
-                      text: "Sign in with Google",
+                      text: "Sign up with Google",
                       onTap: () async {
-                        await signInWithGoogle(context);
+                        await signupWithGoogle(context);
                         // Navigator.of(context).pushNamed(confirmLoginRoute);
                       },
                       width: MediaQuery.of(context).size.width,
-                    ),
-
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, signupOptionsRoute),
-                      child: Padding(
-                          padding: EdgeInsets.only(top: 25),
-                          child: Text(
-                            "Click here to create an account",
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontFamily: "Poppins",
-                              color: primaryColor,
-                            ),
-                          )),
                     ),
 
                     // roundedIconButton(
