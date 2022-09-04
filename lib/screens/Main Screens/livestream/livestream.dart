@@ -10,7 +10,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pp_stream_mobile_app/constant/agora.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
+import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/chats/messages.dart';
+import 'package:provider/provider.dart';
 
 class LiveStream extends StatefulWidget {
   const LiveStream({Key? key}) : super(key: key);
@@ -32,19 +35,30 @@ class _LiveStreamState extends State<LiveStream> {
     // TODO: implement initState
     super.initState();
     // initPlatformState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      initPlatformState(context);
+    });
   }
 
-  Future<void> initPlatformState() async {
-    if (Platform.isAndroid) {
-      await [Permission.microphone, Permission.camera].request();
+  Future<void> initPlatformState(buildContext) async {
+    final meetingProv = Provider.of<MeetingsProvider>(buildContext, listen: false);
+    final userProv = Provider.of<UserProvider>(buildContext, listen: false);
+
+    String userId = userProv.user!.userId!;
+    String creatorId = meetingProv.selectedMeeting!.creatorId!.userId!;
+
+    if (userId == creatorId) {
+      if (Platform.isAndroid) {
+        await [Permission.microphone, Permission.camera].request();
+      }
     }
 
     // Create RTC client instance
     RtcEngineContext context = RtcEngineContext(AGORA_APP_ID);
     var engine = await RtcEngine.createWithContext(context);
     // Define event handling logic
-    engine.setEventHandler(RtcEngineEventHandler(
-        joinChannelSuccess: (String channel, int uid, int elapsed) {
+    engine.setEventHandler(
+        RtcEngineEventHandler(joinChannelSuccess: (String channel, int uid, int elapsed) {
       print('joinChannelSuccess ${channel} ${uid}');
       setState(() {
         _joined = true;
@@ -67,7 +81,12 @@ class _LiveStreamState extends State<LiveStream> {
     // Set user role as broadcaster
     await engine.setClientRole(ClientRole.Broadcaster);
     // Join channel with channel name as 123
-    await engine.joinChannel(AGORA_TEMP_TOKEN, 'boanerges', null, 0);
+    await engine.joinChannel(
+      meetingProv.selectedMeeting!.token,
+      meetingProv.selectedMeeting!.id!,
+      null,
+      0,
+    );
   }
 
   @override
@@ -107,12 +126,11 @@ class _LiveStreamState extends State<LiveStream> {
                       color: Colors.transparent,
                       child: Column(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Messages(),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10.0, right: 10, bottom: 10),
+                            padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
                             child: Container(
                               height: 50,
                               width: MediaQuery.of(context).size.width,
@@ -121,8 +139,7 @@ class _LiveStreamState extends State<LiveStream> {
                                   Expanded(
                                     child: TextField(
                                       style: TextStyle(
-                                        color: pureWhiteBackgroundColor
-                                            .withOpacity(.7),
+                                        color: pureWhiteBackgroundColor.withOpacity(.7),
                                       ),
                                       controller: _controller,
                                       onChanged: (value) {
@@ -219,8 +236,7 @@ class _LiveStreamState extends State<LiveStream> {
   }
 
   Widget _renderRemoteVideo() {
-    if (_remoteUid != 0 && Platform.isAndroid ||
-        _remoteUid != 0 && Platform.isIOS) {
+    if (_remoteUid != 0 && Platform.isAndroid || _remoteUid != 0 && Platform.isIOS) {
       return RtcRemoteView.SurfaceView(
         uid: _remoteUid,
         channelId: "boanerges",
@@ -262,41 +278,42 @@ class _LiveStreamState extends State<LiveStream> {
 
   void _showStopStreamingWarning(context) async {
     return showDialog(
-        context: context,
-        builder: (builder) {
-          return AlertDialog(
-            title: const Text('Stop Streaming'),
-            content: const Text('Are you sure you want to stop streaming?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                  ),
+      context: context,
+      builder: (builder) {
+        return AlertDialog(
+          title: const Text('Stop Streaming'),
+          content: const Text('Are you sure you want to stop streaming?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: primaryColor,
+                  fontFamily: "Poppins",
+                  fontSize: 16,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, mainScreenRoute);
-                },
-                child: const Text(
-                  'Stop Streaming now',
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontFamily: "Poppins",
-                    fontSize: 16,
-                  ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.popAndPushNamed(context, mainScreenRoute);
+              },
+              child: const Text(
+                'Stop Streaming now',
+                style: TextStyle(
+                  color: primaryColor,
+                  fontFamily: "Poppins",
+                  fontSize: 16,
                 ),
               ),
-            ],
-          );
-        });
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
