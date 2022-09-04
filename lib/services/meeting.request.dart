@@ -94,4 +94,43 @@ class MeetingsApiRequest {
       return ApiResponse.withError(e);
     }
   }
+
+  static Future<ApiResponse?> getToken({
+    required String? meetingId,
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.getMeetingTokenEndpoint(meetingId!));
+
+    try {
+      http.Response response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson);
+
+      // if (responseJson['status'] == 'success') {
+      //   return ApiResponse.success(
+      //     responseJson['data'],
+      //   );
+      // }
+
+      return ApiResponse.success(
+        responseJson['token'],
+      );
+
+      // return ApiResponse(
+      //   hasError: true,
+      //   data: responseJson?['message'] ?? "Error",
+      // );
+    } catch (e) {
+      print("wow");
+      print(e);
+      return ApiResponse.withError(e);
+    }
+  }
 }

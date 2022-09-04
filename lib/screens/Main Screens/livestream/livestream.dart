@@ -36,7 +36,7 @@ class _LiveStreamState extends State<LiveStream> {
     super.initState();
     // initPlatformState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      initPlatformState(context);
+      // initPlatformState(context);
     });
   }
 
@@ -51,42 +51,43 @@ class _LiveStreamState extends State<LiveStream> {
       if (Platform.isAndroid) {
         await [Permission.microphone, Permission.camera].request();
       }
+
+      // Create RTC client instance
+      RtcEngineContext context = RtcEngineContext(AGORA_APP_ID);
+      var engine = await RtcEngine.createWithContext(context);
+
+      // Define event handling logic
+      engine.setEventHandler(
+          RtcEngineEventHandler(joinChannelSuccess: (String channel, int uid, int elapsed) {
+        print('joinChannelSuccess ${channel} ${uid}');
+        setState(() {
+          _joined = true;
+        });
+      }, userJoined: (int uid, int elapsed) {
+        print('userJoined ${uid}');
+        setState(() {
+          _remoteUid = uid;
+        });
+      }, userOffline: (int uid, UserOfflineReason reason) {
+        print('userOffline ${uid}');
+        setState(() {
+          _remoteUid = 0;
+        });
+      }));
+
+      await engine.enableVideo();
+      // Set channel profile as livestreaming
+      await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+      // Set user role as broadcaster
+      await engine.setClientRole(ClientRole.Broadcaster);
+      // Join channel with channel name as 123
+      await engine.joinChannel(
+        meetingProv.selectedMeeting!.token,
+        meetingProv.selectedMeeting!.id!,
+        null,
+        0,
+      );
     }
-
-    // Create RTC client instance
-    RtcEngineContext context = RtcEngineContext(AGORA_APP_ID);
-    var engine = await RtcEngine.createWithContext(context);
-    // Define event handling logic
-    engine.setEventHandler(
-        RtcEngineEventHandler(joinChannelSuccess: (String channel, int uid, int elapsed) {
-      print('joinChannelSuccess ${channel} ${uid}');
-      setState(() {
-        _joined = true;
-      });
-    }, userJoined: (int uid, int elapsed) {
-      print('userJoined ${uid}');
-      setState(() {
-        _remoteUid = uid;
-      });
-    }, userOffline: (int uid, UserOfflineReason reason) {
-      print('userOffline ${uid}');
-      setState(() {
-        _remoteUid = 0;
-      });
-    }));
-
-    await engine.enableVideo();
-    // Set channel profile as livestreaming
-    await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    // Set user role as broadcaster
-    await engine.setClientRole(ClientRole.Broadcaster);
-    // Join channel with channel name as 123
-    await engine.joinChannel(
-      meetingProv.selectedMeeting!.token,
-      meetingProv.selectedMeeting!.id!,
-      null,
-      0,
-    );
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/routes/routes.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/main_screen.dart';
 import 'package:pp_stream_mobile_app/screens/starters/splash_screen.dart';
+import 'package:pp_stream_mobile_app/screens/stream/livestreaming.dart';
 import 'package:pp_stream_mobile_app/utils/interfaces/user.dart';
 
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class App extends StatelessWidget {
           ),
         ),
         //changed to login screen
-        home: !isLogged ? const SplashScreen() : const MainScreen(),
+        home: !isLogged ? const LiveStreamingVideo() : const MainScreen(),
       ),
     );
   }
