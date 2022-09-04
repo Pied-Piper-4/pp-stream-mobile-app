@@ -145,33 +145,43 @@ class _NormalLoginState extends State<NormalLogin> {
 
   Future<void> loginIntegration(context) async {
     if (_formKey.currentState!.validate()) {
-      showDiaglog(context: context, text: 'Login in user...');
+      showDiaglog(context: context, text: 'Logging In User...');
 
       _formKey.currentState!.save();
 
       try {
-        ApiResponse? user = await UserRequests.emailLogin(
+        ApiResponse? response = await UserRequests.emailLogin(
           email: email,
           password: password,
         );
 
         Navigator.of(context).pop();
-        print(user!.hasError);
-        if (!user.hasError) {
+        print(response!.hasError);
+        if (!response.hasError) {
           // If there is no error
-          final userProvider = Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUser(user.data);
-          PPStreamSharedPreference.persistUserLoginData(user.data);
+          final userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setUser(response.data);
+          PPStreamSharedPreference.persistUserLoginData(response.data);
           Navigator.of(context).pushNamedAndRemoveUntil(
             confirmLoginRoute,
             (Route<dynamic> route) => false,
           );
-
           return;
+        } else {
+          showSnackBar(
+            context: context,
+            text: response.data.toString(),
+            backgroundColor: Colors.red,
+          );
         }
       } catch (e) {
-        print(e);
-        Navigator.of(context).pop();
+        showSnackBar(
+          context: context,
+          text: "Oops! Something went wrong. Please try again later.",
+          backgroundColor: Colors.red,
+        );
+        print("Error on Normal Login S");
         return;
       }
     }

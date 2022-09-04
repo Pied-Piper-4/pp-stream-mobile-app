@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ApiResponse? response = await UserRequests.googleAuth();
       if (response!.hasError) {
         Navigator.of(context).pop();
-        snackBar(message: response.error, context: context);
+        snackBar(message: response.data, context: context);
         print(response.data);
         return;
       }
@@ -56,9 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).pushNamed(confirmLoginRoute);
     } catch (e) {
       Navigator.of(context).pop();
-      print(e);
-
-      print("error on login screen");
+      showSnackBar(
+        context: context,
+        text: "Oops! Something went wrong. Please try again later.",
+        backgroundColor: Colors.red,
+      );
+      print("error on google login screen");
     }
   }
 
@@ -117,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () =>
                           Navigator.pushNamed(context, signupOptionsRoute),
-                      child: Padding(
+                      child: const Padding(
                           padding: EdgeInsets.only(top: 25),
                           child: Text(
                             "Click here to create an account",

@@ -20,17 +20,20 @@ class UserRequests {
   static Future<ApiResponse?> googleAuth() async {
     var url = Uri.parse(UserServiceUrls.googleSignInEndpoint);
     try {
-      GoogleSignInAccount? googleResponse = await UserRequests._googleAuth.signIn();
+      GoogleSignInAccount? googleResponse =
+          await UserRequests._googleAuth.signIn();
 
       if (googleResponse != null) {
-        GoogleSignInAuthentication? googleAuth = await googleResponse.authentication;
+        GoogleSignInAuthentication? googleAuth =
+            await googleResponse.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
 
-        final UserCredential userCred = await UserRequests.auth.signInWithCredential(credential);
+        final UserCredential userCred =
+            await UserRequests.auth.signInWithCredential(credential);
 
         if (userCred.user != null) {
           final response = await http.post(
@@ -124,7 +127,6 @@ class UserRequests {
     }
   }
 
-
   static Future<ApiResponse?> emailSignup({
     required String? email,
     required String? name,
@@ -137,7 +139,7 @@ class UserRequests {
         body: json.encode(
           {
             "email": email,
-            "name":name,
+            "name": name,
             "password": password,
           },
         ),
@@ -160,6 +162,7 @@ class UserRequests {
           ),
         );
       }
+      print(responseJson['message']);
 
       return ApiResponse(hasError: true, data: responseJson?['message']);
     } catch (e) {

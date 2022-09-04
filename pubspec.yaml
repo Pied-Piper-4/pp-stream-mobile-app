@@ -60,6 +60,8 @@ dependencies:
   modal_bottom_sheet: ^2.1.0
   zego_express_engine: ^2.22.0
   zego_uikit_prebuilt_live_streaming: ^0.0.1
+  url_launcher: ^6.1.5
+  
   
 
 dev_dependencies:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
@@ -228,28 +229,37 @@ class _SignupFormPageState extends State<SignupFormPage> {
       _formKey.currentState!.save();
 
       try {
-        ApiResponse? user = await UserRequests.emailSignup(
+        ApiResponse? response = await UserRequests.emailSignup(
           email: email,
           password: password,
           name: name,
         );
 
         Navigator.of(context).pop();
-        print("on1");
-        print(user!.hasError);
-        if (!user.hasError) {
+
+        if (!response!.hasError) {
           print("ok");
           // If there is no error
           final userProvider =
               Provider.of<UserProvider>(context, listen: false);
-          userProvider.setUser(user.data);
+          userProvider.setUser(response.data);
           // PPStreamSharedPreference.persistUserLoginData(user.data);
+          showSnackBar(
+              context: context,
+              text:"Woo hoo!! Account created successfully",
+              backgroundColor: Colors.green);
           Navigator.of(context).pushNamedAndRemoveUntil(
             normalLoginPageRoute,
             (Route<dynamic> route) => false,
           );
 
           return;
+        } else {
+          print("Error creating user");
+          showSnackBar(
+              context: context,
+              text: response.data,
+              backgroundColor: Colors.red);
         }
       } catch (e) {
         print(e);
