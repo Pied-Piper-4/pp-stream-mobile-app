@@ -115,20 +115,9 @@ class MeetingsApiRequest {
       var responseJson = json.decode(response.body);
       print(responseJson);
 
-      // if (responseJson['status'] == 'success') {
-      //   return ApiResponse.success(
-      //     responseJson['data'],
-      //   );
-      // }
-
       return ApiResponse.success(
         responseJson['token'],
       );
-
-      // return ApiResponse(
-      //   hasError: true,
-      //   data: responseJson?['message'] ?? "Error",
-      // );
     } catch (e) {
       print("wow");
       print(e);
@@ -136,5 +125,80 @@ class MeetingsApiRequest {
     }
   }
 
-  static Future<ApiResponse?> endMeeting() async {}
+  static Future<ApiResponse?> endMeeting({
+    required String? meetingId,
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.closeOrEndMeetingEndpoint(meetingId!));
+
+    try {
+      http.Response response = await http.patch(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson);
+
+      if (responseJson['status'] == 'success') {
+        return ApiResponse.success(
+          MeetingModel.fromJson(
+            {
+              ...responseJson['data'],
+            },
+          ),
+        );
+      }
+
+      return ApiResponse(
+        hasError: true,
+        data: responseJson?['message'] ?? "Error",
+      );
+    } catch (e) {
+      print("wow");
+      print(e);
+      return ApiResponse.withError(e);
+    }
+  }
+
+  static Future<ApiResponse?> getAllPublicMeetings({
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.getAllPublicMeetingsEndpoint);
+
+    try {
+      http.Response response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson['status']);
+
+      if (responseJson['status'] == 'success') {
+        List<MeetingModel> meetings = [];
+        for (var meeting in responseJson['data']) {
+          meetings.add(MeetingModel.fromJson(meeting));
+        }
+        return ApiResponse.success(
+          meetings,
+        );
+      }
+
+      return ApiResponse(
+        hasError: true,
+        data: responseJson?['message'] ?? "Error",
+      );
+    } catch (e) {
+      print("wow");
+      print(e);
+      return ApiResponse.withError(e);
+    }
+  }
 }

@@ -76,6 +76,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> fetchAllData(context) async {
     await fetchAllUserMeetings(context);
+    await fetchAllPublicMeetings(context);
   }
 
   Future<void> fetchAllUserMeetings(context) async {
@@ -96,6 +97,29 @@ class _MainScreenState extends State<MainScreen> {
 
         print(response.data.length);
         meetingsPro.setAllMeetings(response.data);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchAllPublicMeetings(context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      var response = await MeetingsApiRequest.getAllPublicMeetings(
+        token: userProvider.user?.token,
+      );
+
+      if (!response!.hasError) {
+        // Save to provider
+        final meetingsPro = Provider.of<MeetingsProvider>(
+          context,
+          listen: false,
+        );
+
+        print(response.data.length);
+        meetingsPro.setPublicMeetings(response.data);
       }
     } catch (e) {
       print(e);

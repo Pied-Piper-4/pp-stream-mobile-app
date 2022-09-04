@@ -25,5 +25,8 @@ class MeetingUrls {
       "${ApiEntity.userServiceUrl}/meeting/generate-token/$id";
 
   static String closeOrEndMeetingEndpoint(String id) =>
-      "${ApiEntity.userServiceUrl}/meeting/close-or-end/$id";
+      "${ApiEntity.userServiceUrl}/meeting/close/$id";
+
+  static String getAllPublicMeetingsEndpoint =
+      "${ApiEntity.userServiceUrl}/meeting/public/meetings";
 }

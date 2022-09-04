@@ -278,9 +278,9 @@ class _StreamingPageState extends State<StreamingPage> {
                         ],
                       ),
                       IconButton(
-                        icon: const FaIcon(
+                        icon: FaIcon(
                           FontAwesomeIcons.arrowRight,
-                          color: Colors.green,
+                          color: meetingProv.meetings[index].closed! ? Colors.red : Colors.green,
                         ),
                         onPressed: () {
                           if (!meetingProv.meetings[index].closed!) {
@@ -331,6 +331,8 @@ class _StreamingPageState extends State<StreamingPage> {
                       });
                     },
                     hintText: "Stream Title",
+                    keyboardType: TextInputType.text,
+                    denySpace: false,
                   ),
                   const SizedBox(
                     height: 10,
@@ -347,6 +349,8 @@ class _StreamingPageState extends State<StreamingPage> {
                       });
                     },
                     hintText: "Stream Desc",
+                    keyboardType: TextInputType.text,
+                    denySpace: false,
                   ),
                   const SizedBox(
                     height: 10,
@@ -369,6 +373,8 @@ class _StreamingPageState extends State<StreamingPage> {
                       ),
                       Expanded(
                         child: FlutterSwitch(
+                          activeText: "Private",
+                          inactiveText: "Public",
                           width: 125.0,
                           height: 55.0,
                           valueFontSize: 25.0,
