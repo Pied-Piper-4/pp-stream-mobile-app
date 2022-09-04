@@ -7,7 +7,7 @@ class UserModel {
   bool? isGoogleAuth;
   bool? isActive;
   String? phone;
-  String? authToken;
+  String? token;
   String? pic;
   UserModel({
     this.userId,
@@ -15,7 +15,7 @@ class UserModel {
     this.logged,
     this.email,
     this.phone,
-    this.authToken,
+    this.token,
     this.pic,
     this.blocked,
     this.isActive,
@@ -27,7 +27,7 @@ class UserModel {
     name = parsedJson['name'] ?? "";
     email = parsedJson['email'] ?? "";
     phone = parsedJson['phone'] ?? "";
-    authToken = parsedJson['authToken'] ?? "";
+    token = parsedJson['token'] ?? "";
     pic = parsedJson['pic'] ?? "";
     isActive = parsedJson['isActive'] ?? false;
     isGoogleAuth = parsedJson['isGoogleAuth'] ?? false;
@@ -39,7 +39,7 @@ class UserModel {
         "name": name,
         "email": email,
         "phone": phone,
-        "authToken": authToken,
+        "token": token,
         "pic": pic,
         "blocked": blocked,
         "isGoogleAuth": isGoogleAuth,

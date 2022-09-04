@@ -12,3 +12,11 @@ class UserServiceUrls {
 
   static String normalLoginEndpoint = "${ApiEntity.userServiceUrl}/user/login";
 }
+
+class MeetingUrls {
+  static String getAllUserMeetingsEndpoint(String id) =>
+      "${ApiEntity.userServiceUrl}/meeting/get-all/$id";
+
+  static String createMeetingEndpoint(String id) =>
+      "${ApiEntity.userServiceUrl}/meeting/create/$id";
+}

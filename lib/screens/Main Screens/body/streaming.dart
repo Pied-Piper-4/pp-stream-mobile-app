@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming_card_tile.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
@@ -194,64 +195,16 @@ class _StreamingPageState extends State<StreamingPage> {
                                 fontSize: 22,
                                 fontFamily: "PoppinsMedium",
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
+                      meetingsList(context),
                       Padding(
                         padding: const EdgeInsets.only(
                           top: 18.0,
                         ),
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 14.0, bottom: 10.0),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const CircleAvatar(
-                                        radius: 24, // Image radius
-                                        backgroundImage: NetworkImage(
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/300px-Gull_portrait_ca_usa.jpg'),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      const Text(
-                                        "Anshul Sharma",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ConstrainedBox(
-                              constraints: new BoxConstraints(
-                                minHeight: 190.0,
-                                minWidth: 240.0,
-                                maxHeight: 190.0,
-                                maxWidth: 240.0,
-                              ),
-                              child: new DecoratedBox(
-                                decoration: new BoxDecoration(
-                                    color:
-                                        const Color.fromRGBO(36, 52, 71, 0.5),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10))),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -315,104 +268,27 @@ class _StreamingPageState extends State<StreamingPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // TextField(
-                  //   decoration: InputDecoration(hintText: 'enter email'),
-                  //   autofocus: true,
-                  // ),
-                  // SizedBox(height: 10),
-                  // TextField(
-                  //   decoration: InputDecoration(hintText: 'enter password'),
-                  //   autofocus: true,
-                  // ),
-                  // SizedBox(height: 10),
                 ],
               ),
             ));
-    // showMaterialModalBottomSheet(
+  }
 
-    //   context: context,
-    //   builder: (context) => SingleChildScrollView(
-    //         //   isScrollControlled: true,
-
-    //     controller: ModalScrollController.of(context),
-    //     child: SingleChildScrollView(
-    //       child: Container(
-    //         child: Column(
-    //           children: [
-    //             RoundedInput(
-    //               onSaved: (data) {},
-    //               onChanged: (data) {},
-    //               hintText: "Stream Title",
-    //             ),
-    //             roundedButton(
-    //               onTap: () {},
-    //               text: "Go Live",
-    //               width: MediaQuery.of(context).size.width * 0.8,
-    //               backgroundColor: primaryColor,
-    //               textColor: Colors.white,
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
-    // showModalBottomSheet(
-    //   isScrollControlled: true,
-    //   context: context,
-    //   shape: RoundedRectangleBorder(
-    //     borderRadius: BorderRadius.vertical(
-    //       top: Radius.circular(50),
-    //     ),
-    //   ),
-    //   builder: (builder) {
-    //     return Container(
-    //       height: 350.0,
-    //       color: Colors.transparent, //could change this to Color(0xFF737373),
-    //       child: Container(
-    //         decoration: const BoxDecoration(
-    //           color: Colors.white,
-    //           borderRadius: BorderRadius.only(
-    //             topLeft: Radius.circular(30.0),
-    //             topRight: Radius.circular(
-    //               30.0,
-    //             ),
-    //           ),
-    //         ),
-    //         child: Column(
-    //           children: [
-    //             const SizedBox(
-    //               height: 20,
-    //             ),
-    //             RoundedInput(
-    //               onSaved: (data) {},
-    //               onChanged: (data) {},
-    //               hintText: "Stream Title",
-    //             ),
-    //             const SizedBox(
-    //               height: 20,
-    //             ),
-    //             RoundedInput(
-    //               onSaved: (data) {},
-    //               onChanged: (data) {},
-    //               hintText: "Bio",
-    //             ),
-    //             const SizedBox(
-    //               height: 20,
-    //             ),
-    //             roundedButton(
-    //               onTap: () {},
-    //               text: "Go Live",
-    //               width: MediaQuery.of(context).size.width * 0.8,
-    //               backgroundColor: primaryColor,
-    //               textColor: Colors.white,
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
+  Widget meetingsList(context) {
+    final meetingProv = Provider.of<MeetingsProvider>(context);
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: 340,
+      width: width,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, __) => Text(
+          meetingProv.meetings[0].title!,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        itemCount: meetingProv.meetings.length,
+      ),
+    );
   }
 }
