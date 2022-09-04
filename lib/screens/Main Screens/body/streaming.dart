@@ -213,7 +213,8 @@ class _StreamingPageState extends State<StreamingPage> {
                                       width: 10,
                                     ),
                                     Text(
-                                      "Anshul Sharma",
+                                      
+                                      userDataProv.user!.name! ?? "PP User",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500,

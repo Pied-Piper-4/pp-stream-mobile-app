@@ -11,4 +11,5 @@ class UserServiceUrls {
       "${ApiEntity.userServiceUrl}/user/update-profile/$id";
 
   static String normalLoginEndpoint = "${ApiEntity.userServiceUrl}/user/login";
+  static String normalSignupEndpoint = "${ApiEntity.userServiceUrl}/user/signup";
 }
