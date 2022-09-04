@@ -13,6 +13,7 @@ class MeetingsApiRequest {
     required String? userId,
     required String? title,
     required String? token,
+    required bool? isPrivate,
     String? description,
   }) async {
     var url = Uri.parse(MeetingUrls.createMeetingEndpoint(userId!));
@@ -24,6 +25,7 @@ class MeetingsApiRequest {
           {
             "title": title,
             "description": description,
+            "isPrivate": isPrivate,
           },
         ),
         headers: {
@@ -40,7 +42,6 @@ class MeetingsApiRequest {
           MeetingModel.fromJson(
             {
               ...responseJson['data'],
-              "token": responseJson["token"],
             },
           ),
         );
@@ -52,6 +53,7 @@ class MeetingsApiRequest {
       );
     } catch (e) {
       print("wow");
+      print(e);
       return ApiResponse.withError(e);
     }
   }
