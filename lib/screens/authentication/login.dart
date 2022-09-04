@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       userProv.setUser(response.data);
       Navigator.of(context).pushNamed(confirmLoginRoute);
     } catch (e) {
+      Navigator.of(context).pop();
       print(e);
 
       print("error on login screen");

@@ -51,14 +51,14 @@ class UserRequests {
             return ApiResponse.success(
               UserModel.fromJson(
                 {
-                  ...responseJson["user"],
+                  ...responseJson["data"],
                   "authToken": responseJson["token"],
-                  "userId": responseJson?["user"]["_id"],
+                  "userId": responseJson?["data"]["_id"],
                 },
               ),
             );
           }
-          return ApiResponse(hasError: true, data: responseJson['data']);
+          return ApiResponse(hasError: true, data: responseJson['message']);
         }
 
         // FirebaseAuth.instance.authStateChanges().listen((User? user) {
