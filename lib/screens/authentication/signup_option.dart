@@ -55,9 +55,13 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
       userProv.setUser(response.data);
       Navigator.of(context).pushNamed(confirmLoginRoute);
     } catch (e) {
-      print(e);
-
-      print("error on signup screen");
+      Navigator.of(context).pop();
+      showSnackBar(
+        context: context,
+        text: "Oops! Something went wrong. Please try again later.",
+        backgroundColor: Colors.red,
+      );
+      print("error on google signup screen");
     }
   }
 

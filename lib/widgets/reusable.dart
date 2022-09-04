@@ -4,6 +4,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/constant/pp-stream.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _url = Uri.parse(pp_stream_website);
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}
 
 Widget reusableButton({
   @required context,
@@ -18,6 +27,7 @@ Widget reusableButton({
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: const BorderSide(color: primaryColor),
+
       ),
       // minimumSize: Size(500, 50),
       primary: primaryColor,
@@ -178,25 +188,31 @@ Widget serviceComponent({
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 // ignore: prefer_const_literals_to_create_immutables
-                children: const [
-                  Text(
-                    'Terms of Service',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: primaryColor,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.dotted,
+                children: [
+                  GestureDetector(
+                    onTap: _launchUrl,
+                    child: const Text(
+                      'Terms of Service',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: primaryColor,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dotted,
+                      ),
                     ),
                   ),
-                  Text(
-                    'Privacy Policy',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: primaryColor,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.dotted,
+                  GestureDetector(
+                    onTap: _launchUrl,
+                    child: const Text(
+                      'Privacy Policy',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: primaryColor,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dotted,
+                      ),
                     ),
                   ),
                 ],
@@ -287,7 +303,7 @@ Widget onBoardingSlide(
         title!,
         textAlign: TextAlign.center,
         style: const TextStyle(
-          color: deepBlueColor,
+          color: dimmedWhiteBackgroundColor,
           fontSize: 23,
           fontFamily: "Poppins",
         ),

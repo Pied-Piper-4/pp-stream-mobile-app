@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
@@ -32,7 +34,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       height: isActive ? 10.0 : 10.0,
       width: isActive ? 35.6 : 10.0,
       decoration: BoxDecoration(
-        color: isActive ? primaryColor : primaryColor.withOpacity(.5),
+        color: isActive ? pureWhiteBackgroundColor : dimmedWhiteBackgroundColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(20),
         ),
@@ -46,7 +48,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     double height = size.height;
     double width = size.width;
     return Scaffold(
-      backgroundColor: dimmedWhiteBackgroundColor,
+      backgroundColor: primaryColor,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: SingleChildScrollView(
@@ -111,7 +113,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         desc:
                             'Chat while you are on the go, with your friends and family',
                       ),
-                     
                       onBoardingSlide(
                         size: size,
                         imagePath: videoCallImage,
@@ -137,16 +138,69 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 _currentPage == _numPages - 1
                     ? Column(
                         children: [
-                          roundedIconButton(
-                              svgImagePath: getStartedIcon,
-                              width: width * 0.9,
-                              text: "Get Started",
-                              onTap: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  loginRoute,
-                                );
-                              }),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                loginRoute,
+                              );
+                            },
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: HexColor("#dbdad7"),
+                                ),
+                                boxShadow: [
+                                  // BoxShadow(
+                                  //   color: HexColor("#dbdad7"),
+                                  //   offset: const Offset(0, 0),
+                                  //   blurRadius: 1,
+                                  //   spreadRadius: 5,
+                                  // ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 25,
+                                    height: 25,
+                                    child: SvgPicture.asset(
+                                      getStartedIcon,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                 const Text(
+                                    "Get Started",
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontFamily: "PoppinsMedium",
+                                        fontSize: 16),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          // roundedIconButton(
+                          //     svgImagePath: getStartedIcon,
+                          //     width: width * 0.9,
+                          //     text: "Get Started",
+                          //     onTap: () {
+                          //       Navigator.pushReplacementNamed(
+                          //         context,
+                          //         loginRoute,
+                          //       );
+                          //     }),
                         ],
                       )
                     : Container(),
