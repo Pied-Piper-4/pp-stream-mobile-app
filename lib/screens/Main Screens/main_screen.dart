@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
       body: const [
         StreamingPage(),
         ProfilePage(),
-        // SettingsPage(),
+        SettingsPage(),
       ].elementAt(selectedNav),
       bottomNavigationBar: DotNavigationBar(
         margin: const EdgeInsets.only(left: 10, right: 10),
@@ -64,11 +64,11 @@ class _MainScreenState extends State<MainScreen> {
             selectedColor: primaryColor,
           ),
 
-          /// settings
-          // DotNavigationBarItem(
-          //   icon: Icon(Icons.settings),
-          //   selectedColor:  primaryColor,
-          // ),
+          // settings
+          DotNavigationBarItem(
+            icon: Icon(Icons.settings),
+            selectedColor:  primaryColor,
+          ),
         ],
       ),
     );
