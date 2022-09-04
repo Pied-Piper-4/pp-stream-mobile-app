@@ -234,7 +234,8 @@ class _StreamingPageState extends State<StreamingPage> {
 
             if (!apiresponse!.hasError) {
               MeetingModel chosenModel = meetingProv.meetings[index];
-              chosenModel.token = apiresponse.data;
+              // chosenModel.token = apiresponse.data;
+              meetingProv.setSelectMeeting(chosenModel);
               Navigator.of(context).pushNamed(liveStreamPageRoute);
             }
             // Navigator.of(context).pushNamed(liveStreamPageRoute);
