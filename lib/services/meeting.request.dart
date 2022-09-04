@@ -135,4 +135,6 @@ class MeetingsApiRequest {
       return ApiResponse.withError(e);
     }
   }
+
+  static Future<ApiResponse?> endMeeting() async {}
 }

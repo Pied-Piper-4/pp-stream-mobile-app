@@ -283,7 +283,7 @@ class _StreamingPageState extends State<StreamingPage> {
                           color: Colors.green,
                         ),
                         onPressed: () {
-                          if (meetingProv.meetings[index].closed!) {
+                          if (!meetingProv.meetings[index].closed!) {
                             MeetingModel chosenModel = meetingProv.meetings[index];
                             meetingProv.setSelectMeeting(chosenModel);
                             Navigator.of(context).pushNamed(liveStreamPageRoute);
