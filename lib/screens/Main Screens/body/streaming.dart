@@ -12,6 +12,7 @@ import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StreamingPage extends StatefulWidget {
   const StreamingPage({Key? key}) : super(key: key);
@@ -189,7 +190,7 @@ class _StreamingPageState extends State<StreamingPage> {
                         child: Row(
                           children: [
                             const Text(
-                              'Popular Streams',
+                              'Recent Streams',
                               style: TextStyle(
                                 color: Colors.white70,
                                 fontSize: 22,
@@ -199,6 +200,55 @@ class _StreamingPageState extends State<StreamingPage> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                          constraints: BoxConstraints.expand(height: 100),
+                          padding: const EdgeInsets.only(top: 8.0),
+                          color: Color.fromRGBO(36, 52, 71, 0.5),
+                          alignment: Alignment.centerLeft,
+                          // transform: Matrix4.rotationZ(0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 18.0, top: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "hey what's up guys i am live now",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      "This is a long text, and we are in lovely",
+                                      style: TextStyle(
+                                          color: Colors.white54,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                    // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.arrowRight,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () {
+                                      print("Pressed");
+                                    })
+                              ],
+                            ),
+                          )),
                       meetingsList(context),
                       Padding(
                         padding: const EdgeInsets.only(
@@ -230,7 +280,7 @@ class _StreamingPageState extends State<StreamingPage> {
                   left: 20,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Center(
