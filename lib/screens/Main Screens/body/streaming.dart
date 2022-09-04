@@ -306,89 +306,93 @@ class _StreamingPageState extends State<StreamingPage> {
       backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-            top: 20, right: 20, left: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 8.0),
-              RoundedInput(
-                onSaved: (value) {
-                  setState(() {
-                    title = value;
-                  });
-                },
-                onChanged: (data) {
-                  setState(() {
-                    title = data;
-                  });
-                },
-                hintText: "Stream Title",
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              RoundedInput(
-                onSaved: (data) {
-                  setState(() {
-                    description = data;
-                  });
-                },
-                onChanged: (data) {
-                  setState(() {
-                    description = data;
-                  });
-                },
-                hintText: "Stream Desc",
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, StateSetter mystate) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20, right: 20, left: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: roundedButton(
-                        onTap: () {
-                          createStream(context);
-                        },
-                        text: "Go Live",
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        backgroundColor: primaryColor,
-                        textColor: Colors.white,
-                      ),
-                    ),
+                  const SizedBox(height: 8.0),
+                  RoundedInput(
+                    onSaved: (value) {
+                      mystate(() {
+                        title = value;
+                      });
+                    },
+                    onChanged: (data) {
+                      mystate(() {
+                        title = data;
+                      });
+                    },
+                    hintText: "Stream Title",
                   ),
-                  Expanded(
-                    child: FlutterSwitch(
-                      width: 125.0,
-                      height: 55.0,
-                      valueFontSize: 25.0,
-                      toggleSize: 45.0,
-                      value: isPrivate!,
-                      borderRadius: 30.0,
-                      padding: 8.0,
-                      showOnOff: true,
-                      onToggle: (val) {
-                        setState(() {
-                          isPrivate = val;
-                        });
-                      },
-                    ),
-                  )
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RoundedInput(
+                    onSaved: (data) {
+                      mystate(() {
+                        description = data;
+                      });
+                    },
+                    onChanged: (data) {
+                      mystate(() {
+                        description = data;
+                      });
+                    },
+                    hintText: "Stream Desc",
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: roundedButton(
+                            onTap: () {
+                              createStream(context);
+                            },
+                            text: "Go Live",
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            backgroundColor: primaryColor,
+                            textColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: FlutterSwitch(
+                          width: 125.0,
+                          height: 55.0,
+                          valueFontSize: 25.0,
+                          toggleSize: 45.0,
+                          value: isPrivate!,
+                          borderRadius: 30.0,
+                          padding: 8.0,
+                          showOnOff: true,
+                          onToggle: (val) {
+                            mystate(() {
+                              isPrivate = val;
+                            });
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
