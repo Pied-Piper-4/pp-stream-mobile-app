@@ -135,7 +135,7 @@ class _StreamingPageState extends State<StreamingPage> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width / 1.5,
                                     child: const Text(
-                                      "Pied Piper Live",
+                                      "Piper Chat",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 17,
