@@ -278,9 +278,9 @@ class _StreamingPageState extends State<StreamingPage> {
                         ],
                       ),
                       IconButton(
-                        icon: const FaIcon(
+                        icon: FaIcon(
                           FontAwesomeIcons.arrowRight,
-                          color: Colors.green,
+                          color: meetingProv.meetings[index].closed! ? Colors.red : Colors.green,
                         ),
                         onPressed: () {
                           if (!meetingProv.meetings[index].closed!) {
