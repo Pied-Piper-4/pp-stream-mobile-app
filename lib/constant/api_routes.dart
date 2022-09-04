@@ -23,4 +23,7 @@ class MeetingUrls {
 
   static String getMeetingTokenEndpoint(String id) =>
       "${ApiEntity.userServiceUrl}/meeting/generate-token/$id";
+
+  static String closeOrEndMeetingEndpoint(String id) =>
+      "${ApiEntity.userServiceUrl}/meeting/close-or-end/$id";
 }

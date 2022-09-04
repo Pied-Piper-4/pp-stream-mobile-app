@@ -28,7 +28,6 @@ class _LiveStreamingVideoState extends State<LiveStreamingVideo> {
           // set config properties based on roles, UI will drive by properties
           turnOnCameraWhenJoining:
               meetingProv.selectedMeeting!.creatorId!.userId == userProv.user!.userId,
-
           turnOnMicrophoneWhenJoining:
               meetingProv.selectedMeeting!.creatorId!.userId == userProv.user!.userId,
           useSpeakerWhenJoining: false,
@@ -37,9 +36,33 @@ class _LiveStreamingVideoState extends State<LiveStreamingVideo> {
                   ZegoLiveMenuBarButtonName.toggleCameraButton,
                   ZegoLiveMenuBarButtonName.toggleMicrophoneButton,
                   ZegoLiveMenuBarButtonName.switchCameraFacingButton,
+                  ZegoLiveMenuBarButtonName.leaveButton,
+                  ZegoLiveMenuBarButtonName.endButton,
+                  ZegoLiveMenuBarButtonName.switchAudioOutputButton
                 ]
               : const [],
           useEndLiveStreamingButton: true,
+          useVideoViewAspectFill: true,
+          onEndOrLiveStreaming: () {
+            // close live streaming if you is host
+            Navigator.of(context).pop();
+          },
+
+          showSoundWavesInAudioMode: true,
+          avatarBuilder: (BuildContext context, Size size, ZegoUIKitUser? user, Map extraInfo) {
+            return user != null
+                ? Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          userProv.user!.pic!,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox();
+          },
         ),
       ),
     );

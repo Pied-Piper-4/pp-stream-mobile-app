@@ -8,6 +8,7 @@ import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/models/meeting.model.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
+import 'package:pp_stream_mobile_app/services/meeting.request.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 
@@ -134,7 +135,7 @@ class _StreamingPageState extends State<StreamingPage> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width / 1.5,
                                     child: const Text(
-                                      "Pied Piper Live",
+                                      "Piper Chat",
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 17,
@@ -282,7 +283,7 @@ class _StreamingPageState extends State<StreamingPage> {
                           color: Colors.green,
                         ),
                         onPressed: () {
-                          if (meetingProv.meetings[index].closed!) {
+                          if (!meetingProv.meetings[index].closed!) {
                             MeetingModel chosenModel = meetingProv.meetings[index];
                             meetingProv.setSelectMeeting(chosenModel);
                             Navigator.of(context).pushNamed(liveStreamPageRoute);
@@ -404,8 +405,32 @@ class _StreamingPageState extends State<StreamingPage> {
       final meetingProv = Provider.of<MeetingsProvider>(context, listen: false);
       final userProv = Provider.of<UserProvider>(context, listen: false);
 
-      print(title);
-      print(description);
+      showDiaglog(context: context, text: 'Going live');
+      try {
+        var response = await MeetingsApiRequest.createMeeting(
+          title: title,
+          description: description,
+          isPrivate: isPrivate!,
+          token: userProv.user!.token,
+          userId: userProv.user!.userId,
+        );
+
+        print("ok");
+        if (!response!.hasError) {
+          print("ok2");
+          meetingProv.addMeeting(response.data!);
+          meetingProv.setSelectMeeting(response.data);
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          Navigator.of(context).pushNamed(liveStreamPageRoute);
+          return;
+        }
+      } catch (e) {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        print(e);
+        return;
+      }
     }
   }
 }
