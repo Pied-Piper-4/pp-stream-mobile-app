@@ -103,7 +103,7 @@ class UserRequests {
       );
 
       var responseJson = json.decode(response.body);
-      print(responseJson['status']);
+      print(responseJson);
 
       if (responseJson['status'] == 'success') {
         return ApiResponse.success(

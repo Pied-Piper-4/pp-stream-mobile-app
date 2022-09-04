@@ -20,4 +20,7 @@ class MeetingUrls {
 
   static String createMeetingEndpoint(String id) =>
       "${ApiEntity.userServiceUrl}/meeting/create/$id";
+
+  static String getMeetingTokenEndpoint(String id) =>
+      "${ApiEntity.userServiceUrl}/meeting/generate-token/$id";
 }

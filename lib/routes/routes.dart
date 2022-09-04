@@ -11,6 +11,7 @@ import 'package:pp_stream_mobile_app/screens/authentication/signup_option.dart';
 import 'package:pp_stream_mobile_app/screens/starters/loading_screen.dart';
 import 'package:pp_stream_mobile_app/screens/starters/on_boarding_screen.dart';
 import 'package:pp_stream_mobile_app/screens/starters/splash_screen.dart';
+import 'package:pp_stream_mobile_app/screens/stream/livestreaming.dart';
 
 class RouteGenerator {
   // ignore: missing_return
@@ -31,13 +32,13 @@ class RouteGenerator {
       case onBoardingScreenRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
       case liveStreamPageRoute:
-        return MaterialPageRoute(builder: (_) => const LiveStream());
+        return MaterialPageRoute(builder: (_) => const LiveStreamingVideo());
       case normalLoginPageRoute:
         return MaterialPageRoute(builder: (_) => const NormalLogin());
       case signupOptionsRoute:
-          return MaterialPageRoute(builder: (_) => const SignupOptionScreen());
+        return MaterialPageRoute(builder: (_) => const SignupOptionScreen());
       case signupFormPageRoute:
-          return MaterialPageRoute(builder: (_) => const SignupFormPage());
+        return MaterialPageRoute(builder: (_) => const SignupFormPage());
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
