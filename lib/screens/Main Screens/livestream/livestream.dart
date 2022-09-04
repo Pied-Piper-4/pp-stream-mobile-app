@@ -118,7 +118,7 @@ class _LiveStreamState extends State<LiveStream> {
                     width: MediaQuery.of(context).size.width,
                     color: primaryColor,
                   ),
-                  Positioned(
+                  Positioned( 
                     bottom: 0,
                     child: Container(
                       height: 350,

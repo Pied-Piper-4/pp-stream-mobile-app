@@ -123,4 +123,48 @@ class UserRequests {
       return ApiResponse.withError(e);
     }
   }
+
+
+  static Future<ApiResponse?> emailSignup({
+    required String? email,
+    required String? name,
+    required String? password,
+  }) async {
+    var loginUrl = Uri.parse(UserServiceUrls.normalSignupEndpoint);
+    try {
+      http.Response response = await http.post(
+        loginUrl,
+        body: json.encode(
+          {
+            "email": email,
+            "name":name,
+            "password": password,
+          },
+        ),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson['status']);
+
+      if (responseJson['status'] == 'success') {
+        return ApiResponse.success(
+          UserModel.fromJson(
+            {
+              "token": responseJson["token"],
+              "id": responseJson?["data"]?["_id"],
+              ...responseJson["data"],
+            },
+          ),
+        );
+      }
+
+      return ApiResponse(hasError: true, data: responseJson?['message']);
+    } catch (e) {
+      print("wow");
+      return ApiResponse.withError(e);
+    }
+  }
 }

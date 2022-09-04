@@ -6,6 +6,8 @@ import 'package:pp_stream_mobile_app/screens/Main%20Screens/main_screen.dart';
 import 'package:pp_stream_mobile_app/screens/authentication/confirm_login.dart';
 import 'package:pp_stream_mobile_app/screens/authentication/login.dart';
 import 'package:pp_stream_mobile_app/screens/authentication/normal_login.dart';
+import 'package:pp_stream_mobile_app/screens/authentication/signup_form.dart';
+import 'package:pp_stream_mobile_app/screens/authentication/signup_option.dart';
 import 'package:pp_stream_mobile_app/screens/starters/loading_screen.dart';
 import 'package:pp_stream_mobile_app/screens/starters/on_boarding_screen.dart';
 import 'package:pp_stream_mobile_app/screens/starters/splash_screen.dart';
@@ -32,6 +34,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const LiveStream());
       case normalLoginPageRoute:
         return MaterialPageRoute(builder: (_) => const NormalLogin());
+      case signupOptionsRoute:
+          return MaterialPageRoute(builder: (_) => const SignupOptionScreen());
+      case signupFormPageRoute:
+          return MaterialPageRoute(builder: (_) => const SignupFormPage());
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
