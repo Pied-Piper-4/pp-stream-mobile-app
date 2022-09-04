@@ -11,6 +11,7 @@ class MeetingModel {
   String? link;
   bool? closed;
   String? token;
+  String? thumbnail;
 
   MeetingModel({
     this.creatorId,
@@ -21,6 +22,7 @@ class MeetingModel {
     this.link,
     this.closed,
     this.token,
+    this.thumbnail,
   });
 
   factory MeetingModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class MeetingModel {
       link: json['link'] ?? '',
       closed: json['closed'] ?? false,
       token: json['token'] ?? '',
+      thumbnail: json['thumbnail'] ?? '',
     );
   }
 }
