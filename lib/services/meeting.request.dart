@@ -163,4 +163,42 @@ class MeetingsApiRequest {
       return ApiResponse.withError(e);
     }
   }
+
+  static Future<ApiResponse?> getAllPublicMeetings({
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.getAllPublicMeetingsEndpoint);
+
+    try {
+      http.Response response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson['status']);
+
+      if (responseJson['status'] == 'success') {
+        List<MeetingModel> meetings = [];
+        for (var meeting in responseJson['data']) {
+          meetings.add(MeetingModel.fromJson(meeting));
+        }
+        return ApiResponse.success(
+          meetings,
+        );
+      }
+
+      return ApiResponse(
+        hasError: true,
+        data: responseJson?['message'] ?? "Error",
+      );
+    } catch (e) {
+      print("wow");
+      print(e);
+      return ApiResponse.withError(e);
+    }
+  }
 }

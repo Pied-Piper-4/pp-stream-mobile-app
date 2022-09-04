@@ -26,4 +26,7 @@ class MeetingUrls {
 
   static String closeOrEndMeetingEndpoint(String id) =>
       "${ApiEntity.userServiceUrl}/meeting/close/$id";
+
+  static String getAllPublicMeetingsEndpoint =
+      "${ApiEntity.userServiceUrl}/meeting/public/meetings";
 }
