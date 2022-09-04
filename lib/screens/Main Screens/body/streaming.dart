@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
@@ -6,9 +5,6 @@ import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/models/meeting.model.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
-import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming_card_tile.dart';
-import 'package:pp_stream_mobile_app/services/meeting.request.dart';
-import 'package:pp_stream_mobile_app/utils/interfaces/api_response.dart';
 import 'package:pp_stream_mobile_app/widgets/reusable.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +17,9 @@ class StreamingPage extends StatefulWidget {
 
 class _StreamingPageState extends State<StreamingPage> {
   final _formKey = GlobalKey<FormState>();
+  String? title;
+  String? description;
+  bool? isPrivate;
   @override
   Widget build(BuildContext context) {
     final userDataProv = Provider.of<UserProvider>(context);
@@ -292,33 +291,6 @@ class _StreamingPageState extends State<StreamingPage> {
                 )),
           ),
         ),
-        // itemBuilder: (_, index) => GestureDetector(
-        //   child: Container(
-        //     child: Text(
-        //       meetingProv.meetings[index].title!,
-        //       style: TextStyle(
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        //   onTap: () async {
-        //     final meetingProv = Provider.of<MeetingsProvider>(context, listen: false);
-        //     final userDataProv = Provider.of<UserProvider>(context, listen: false);
-        //     meetingProv.setSelectMeeting(meetingProv.meetings[index]);
-        //     ApiResponse? apiresponse = await MeetingsApiRequest.getToken(
-        //       meetingId: meetingProv.meetings[index].id,
-        //       token: userDataProv.user!.token,
-        //     );
-
-        //     if (!apiresponse!.hasError) {
-        //       MeetingModel chosenModel = meetingProv.meetings[index];
-        //       // chosenModel.token = apiresponse.data;
-        //       meetingProv.setSelectMeeting(chosenModel);
-        //       Navigator.of(context).pushNamed(liveStreamPageRoute);
-        //     }
-        //     // Navigator.of(context).pushNamed(liveStreamPageRoute);
-        //   },
-        // ),
         itemCount: meetingProv.meetings.length,
       ),
     );
@@ -338,23 +310,34 @@ class _StreamingPageState extends State<StreamingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Center(
-            //   child: Text(
-            //     'Login',
-            //   ),
-            // ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             RoundedInput(
-              // onSaved: (data) {},
-              // onChanged: (data) {},
+              onSaved: (value) {
+                setState(() {
+                  title = value;
+                });
+              },
+              onChanged: (data) {
+                setState(() {
+                  title = data;
+                });
+              },
               hintText: "Stream Title",
             ),
             const SizedBox(
               height: 10,
             ),
             RoundedInput(
-              // onSaved: (data) {},
-              // onChanged: (data) {},
+              onSaved: (data) {
+                setState(() {
+                  description = data;
+                });
+              },
+              onChanged: (data) {
+                setState(() {
+                  description = data;
+                });
+              },
               hintText: "Stream Desc",
             ),
             const SizedBox(
