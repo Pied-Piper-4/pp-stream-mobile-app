@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
@@ -19,7 +22,7 @@ class _StreamingPageState extends State<StreamingPage> {
   final _formKey = GlobalKey<FormState>();
   String? title;
   String? description;
-  bool? isPrivate;
+  bool? isPrivate = false;
   @override
   Widget build(BuildContext context) {
     final userDataProv = Provider.of<UserProvider>(context);
@@ -306,59 +309,99 @@ class _StreamingPageState extends State<StreamingPage> {
       builder: (context) => Padding(
         padding: EdgeInsets.only(
             top: 20, right: 20, left: 20, bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 8.0),
-            RoundedInput(
-              onSaved: (value) {
-                setState(() {
-                  title = value;
-                });
-              },
-              onChanged: (data) {
-                setState(() {
-                  title = data;
-                });
-              },
-              hintText: "Stream Title",
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            RoundedInput(
-              onSaved: (data) {
-                setState(() {
-                  description = data;
-                });
-              },
-              onChanged: (data) {
-                setState(() {
-                  description = data;
-                });
-              },
-              hintText: "Stream Desc",
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: roundedButton(
-                onTap: () {},
-                text: "Go Live",
-                width: MediaQuery.of(context).size.width * 0.6,
-                backgroundColor: primaryColor,
-                textColor: Colors.white,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 8.0),
+              RoundedInput(
+                onSaved: (value) {
+                  setState(() {
+                    title = value;
+                  });
+                },
+                onChanged: (data) {
+                  setState(() {
+                    title = data;
+                  });
+                },
+                hintText: "Stream Title",
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              RoundedInput(
+                onSaved: (data) {
+                  setState(() {
+                    description = data;
+                  });
+                },
+                onChanged: (data) {
+                  setState(() {
+                    description = data;
+                  });
+                },
+                hintText: "Stream Desc",
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: roundedButton(
+                        onTap: () {
+                          createStream(context);
+                        },
+                        text: "Go Live",
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        backgroundColor: primaryColor,
+                        textColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: FlutterSwitch(
+                      width: 125.0,
+                      height: 55.0,
+                      valueFontSize: 25.0,
+                      toggleSize: 45.0,
+                      value: isPrivate!,
+                      borderRadius: 30.0,
+                      padding: 8.0,
+                      showOnOff: true,
+                      onToggle: (val) {
+                        setState(() {
+                          isPrivate = val;
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> createStream(context) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final meetingProv = Provider.of<MeetingsProvider>(context, listen: false);
+      final userProv = Provider.of<UserProvider>(context, listen: false);
+
+      print(title);
+      print(description);
+    }
   }
 }
