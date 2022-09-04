@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/constant/page_routes.dart';
+import 'package:pp_stream_mobile_app/models/meeting.model.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/meetings_card_tile.dart';
 import 'package:provider/provider.dart';
@@ -63,10 +65,18 @@ class _AllMeetingsPageState extends State<AllMeetingsPage> {
         padding: EdgeInsets.zero,
         itemCount: meetingsProv.publicMeetings.length,
         itemBuilder: (BuildContext ctx, int index) {
-          return MeetingsCardTile(
-            meeting:meetingsProv.publicMeetings[index],
-          
-            
+          return GestureDetector(
+            onTap: () {
+              print("lnz");
+              if (!meetingsProv.publicMeetings[index].closed!) {
+                MeetingModel chosenModel = meetingsProv.publicMeetings[index];
+                meetingsProv.setSelectMeeting(chosenModel);
+                Navigator.of(context).pushNamed(liveStreamPageRoute);
+              }
+            },
+            child: MeetingsCardTile(
+              meeting: meetingsProv.publicMeetings[index],
+            ),
           );
         });
   }
