@@ -115,20 +115,9 @@ class MeetingsApiRequest {
       var responseJson = json.decode(response.body);
       print(responseJson);
 
-      // if (responseJson['status'] == 'success') {
-      //   return ApiResponse.success(
-      //     responseJson['data'],
-      //   );
-      // }
-
       return ApiResponse.success(
         responseJson['token'],
       );
-
-      // return ApiResponse(
-      //   hasError: true,
-      //   data: responseJson?['message'] ?? "Error",
-      // );
     } catch (e) {
       print("wow");
       print(e);
@@ -136,5 +125,42 @@ class MeetingsApiRequest {
     }
   }
 
-  static Future<ApiResponse?> endMeeting() async {}
+  static Future<ApiResponse?> endMeeting({
+    required String? meetingId,
+    required String? token,
+  }) async {
+    var url = Uri.parse(MeetingUrls.closeOrEndMeetingEndpoint(meetingId!));
+
+    try {
+      http.Response response = await http.patch(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+
+      var responseJson = json.decode(response.body);
+      print(responseJson);
+
+      if (responseJson['status'] == 'success') {
+        return ApiResponse.success(
+          MeetingModel.fromJson(
+            {
+              ...responseJson['data'],
+            },
+          ),
+        );
+      }
+
+      return ApiResponse(
+        hasError: true,
+        data: responseJson?['message'] ?? "Error",
+      );
+    } catch (e) {
+      print("wow");
+      print(e);
+      return ApiResponse.withError(e);
+    }
+  }
 }

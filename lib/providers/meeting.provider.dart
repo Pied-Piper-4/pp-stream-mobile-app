@@ -12,6 +12,12 @@ class MeetingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateMeeting(MeetingModel meeting) {
+    _meetings.removeWhere((element) => element.id == meeting.id);
+    _meetings.add(meeting);
+    notifyListeners();
+  }
+
   void setSelectMeeting(MeetingModel meeting) {
     _selectedMeeting = meeting;
     notifyListeners();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
+import 'package:pp_stream_mobile_app/services/meeting.request.dart';
 import 'package:provider/provider.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
@@ -43,9 +44,29 @@ class _LiveStreamingVideoState extends State<LiveStreamingVideo> {
               : const [],
           useEndLiveStreamingButton: true,
           useVideoViewAspectFill: true,
-          onEndOrLiveStreaming: () {
+          onEndOrLiveStreaming: () async {
             // close live streaming if you is host
+            bool isCreator =
+                meetingProv.selectedMeeting!.creatorId!.userId == userProv.user!.userId;
+            if (isCreator) {
+              try {
+                var response = await MeetingsApiRequest.endMeeting(
+                  meetingId: meetingProv.selectedMeeting!.id,
+                  token: userProv.user!.token,
+                );
+                if (!response!.hasError) {
+                  meetingProv.setSelectMeeting(response.data);
+                  meetingProv.updateMeeting(response.data);
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop();
+                  return;
+                }
+              } catch (e) {
+                print(e);
+              }
+            }
             Navigator.of(context).pop();
+            return;
           },
 
           showSoundWavesInAudioMode: true,
