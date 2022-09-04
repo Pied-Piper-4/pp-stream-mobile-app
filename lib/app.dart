@@ -45,11 +45,7 @@ class App extends StatelessWidget {
           ),
         ),
         //changed to login screen
-<<<<<<< HEAD
         home: !isLogged ? const LiveStreamingVideo() : const MainScreen(),
-=======
-        home: !isLogged ? const SplashScreen():const MainScreen(),
->>>>>>> 6c84c92cac2394806744724a1566ace46854cad6
       ),
     );
   }
