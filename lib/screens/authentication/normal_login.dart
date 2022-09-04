@@ -163,7 +163,7 @@ class _NormalLoginState extends State<NormalLogin> {
           userProvider.setUser(user.data);
           PPStreamSharedPreference.persistUserLoginData(user.data);
           Navigator.of(context).pushNamedAndRemoveUntil(
-            mainScreenRoute,
+            confirmLoginRoute,
             (Route<dynamic> route) => false,
           );
 

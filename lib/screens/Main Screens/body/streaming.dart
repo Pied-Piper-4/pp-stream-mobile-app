@@ -52,7 +52,8 @@ class _StreamingPageState extends State<StreamingPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).popAndPushNamed(liveStreamPageRoute);
+                      Navigator.of(context)
+                          .popAndPushNamed(liveStreamPageRoute);
                     },
                     child: RichText(
                       text: const TextSpan(
@@ -121,13 +122,17 @@ class _StreamingPageState extends State<StreamingPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    "Pied Piper Live",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: "PoppinsMedium",
-                                        color: Colors.white),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.5,
+                                    child: const Text(
+                                      "Pied Piper Live",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontFamily: "PoppinsMedium",
+                                          color: Colors.white),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 0.0),
@@ -171,14 +176,17 @@ class _StreamingPageState extends State<StreamingPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 30.0,bottom: 10,),
+                      padding: const EdgeInsets.only(
+                        top: 30.0,
+                        bottom: 10,
+                      ),
                       child: Row(
                         children: [
                           Text(
                             'Popular Streams',
                             style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height / 30,
-                             fontFamily: "PoppinsMedium",
+                              fontFamily: "PoppinsMedium",
                               color: pureWhiteBackgroundColor.withOpacity(.7),
                             ),
                           ),
@@ -193,7 +201,8 @@ class _StreamingPageState extends State<StreamingPage> {
                         children: [
                           Positioned.fill(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 14.0, bottom: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, bottom: 10.0),
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Row(
@@ -208,8 +217,7 @@ class _StreamingPageState extends State<StreamingPage> {
                                       width: 10,
                                     ),
                                     Text(
-                                      
-                                      userDataProv.user!.name! ?? "PP User",
+                                      userDataProv.user!.name!,
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500,
@@ -230,7 +238,8 @@ class _StreamingPageState extends State<StreamingPage> {
                             child: new DecoratedBox(
                               decoration: new BoxDecoration(
                                   color: Color.fromRGBO(36, 52, 71, 0.5),
-                                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
                             ),
                           ),
                         ],
