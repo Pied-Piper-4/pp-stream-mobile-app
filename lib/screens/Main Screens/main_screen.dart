@@ -5,7 +5,7 @@ import 'package:pp_stream_mobile_app/models/meeting.model.dart';
 import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/profile.dart';
-import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/settings.dart';
+import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/all_meetings.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/body/streaming.dart';
 import 'package:pp_stream_mobile_app/services/meeting.request.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +36,8 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.black,
       body: const [
         StreamingPage(),
+        AllMeetingsPage(),
         ProfilePage(),
-        SettingsPage(),
       ].elementAt(selectedNav),
       bottomNavigationBar: DotNavigationBar(
         margin: const EdgeInsets.only(left: 10, right: 10),
@@ -58,16 +58,16 @@ class _MainScreenState extends State<MainScreen> {
             selectedColor: primaryColor,
           ),
 
+          // ALL meetings
+          DotNavigationBarItem(
+            icon: Icon(Icons.public),
+            selectedColor: primaryColor,
+          ),
+
           /// Profile
           DotNavigationBarItem(
             icon: Icon(Icons.person),
             selectedColor: primaryColor,
-          ),
-
-          // settings
-          DotNavigationBarItem(
-            icon: Icon(Icons.settings),
-            selectedColor:  primaryColor,
           ),
         ],
       ),
