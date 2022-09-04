@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
+import 'package:pp_stream_mobile_app/providers/meeting.provider.dart';
 import 'package:pp_stream_mobile_app/providers/user.dart';
 import 'package:pp_stream_mobile_app/routes/routes.dart';
 import 'package:pp_stream_mobile_app/screens/Main%20Screens/main_screen.dart';
@@ -27,6 +28,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => isLogged ? UserProvider(user: userLoggedAndData?.user) : UserProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => MeetingsProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

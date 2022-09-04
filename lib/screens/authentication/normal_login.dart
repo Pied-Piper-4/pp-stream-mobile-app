@@ -156,10 +156,8 @@ class _NormalLoginState extends State<NormalLogin> {
         );
 
         Navigator.of(context).pop();
-        print("on1");
         print(user!.hasError);
         if (!user.hasError) {
-          print("ok");
           // If there is no error
           final userProvider = Provider.of<UserProvider>(context, listen: false);
           userProvider.setUser(user.data);
