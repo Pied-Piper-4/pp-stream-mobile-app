@@ -77,7 +77,7 @@ class _LiveStreamingVideoState extends State<LiveStreamingVideo> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: NetworkImage(
-                          userProv.user!.pic!,
+                          meetingProv.selectedMeeting!.thumbnail!,
                         ),
                       ),
                     ),
