@@ -25,7 +25,9 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => isLogged ? UserProvider(user: userLoggedAndData?.user) : UserProvider(),
+          create: (_) => isLogged
+              ? UserProvider(user: userLoggedAndData?.user)
+              : UserProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => MeetingsProvider(),

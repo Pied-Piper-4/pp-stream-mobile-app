@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pp_stream_mobile_app/constant/assets_constants.dart';
 import 'package:pp_stream_mobile_app/constant/colors.dart';
 import 'package:pp_stream_mobile_app/constant/page_routes.dart';
 import 'package:pp_stream_mobile_app/models/meeting.model.dart';
@@ -108,7 +109,10 @@ class _StreamingPageState extends State<StreamingPage> {
                       ),
                       child: const DecoratedBox(
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(36, 52, 71, 0.5),
+                            // color: Color.fromRGBO(36, 52, 71, 0.5),
+                            
+                            image: DecorationImage(image: AssetImage(cover)),
+                            
                             borderRadius: BorderRadius.all(Radius.circular(10))),
                       ),
                     ),

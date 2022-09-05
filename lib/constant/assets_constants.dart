@@ -14,3 +14,4 @@ const String appIcon = "assets/icons/appIcon.png";
 const String password = "assets/icons/password.svg";
 
 const String banner = "assets/images/banner.png";
+const String cover = "assets/images/cover.png";
